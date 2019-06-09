@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { GameBoardComponent } from "./game-board.component";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe("GameBoardComponent", () => {
   let component: GameBoardComponent;
@@ -21,5 +20,28 @@ describe("GameBoardComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy();
+  });
+  describe("onClick handler", () => {
+    it("should emit row and col onClickHandler", () => {
+      // Arrange
+      component.gameBoard = [[0]];
+      const spy = spyOn(component.selectCell, "emit");
+      // Act
+      component.onClickHandler(0);
+
+      // Assert
+      expect(spy).toHaveBeenCalledWith({ row: 0, col: 0 });
+    });
+
+    it("should emit col index where the first col value is 0", () => {
+      // Arrange
+      component.gameBoard = [[1, 1, 1, 0]];
+      const spy = spyOn(component.selectCell, "emit");
+      // Act
+      component.onClickHandler(0);
+
+      // Assert
+      expect(spy).toHaveBeenCalledWith({ row: 0, col: 3 });
+    });
   });
 });
