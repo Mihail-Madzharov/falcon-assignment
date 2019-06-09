@@ -1,25 +1,14 @@
 <div class="flc-layout--center">
   <div class="flc-game-board">
-    <div class="board-col">
-      <!-- PIECES -->
-    </div>
-    <div class="board-col">
-      <!-- PIECES -->
-    </div>
-    <div class="board-col">
-      <!-- PIECES -->
-    </div>
-    <div class="board-col">
-      <!-- PIECES -->
-    </div>
-    <div class="board-col">
-      <!-- PIECES -->
-    </div>
-    <div class="board-col">
-      <!-- PIECES -->
-    </div>
-    <div class="board-col">
-      <!-- PIECES -->
+    <div
+      class="board-col"
+      *ngFor="let boardRow of gameBoard; let row = index"
+      (click)="onClickHandler(row)"
+    >
+      <div
+        *ngFor="let boardCol of gameBoard[row]; let col = index"
+        [ngClass]="{ 'flc-game-piece': gameBoard[row][col] === 1 }"
+      ></div>
     </div>
   </div>
 </div>
