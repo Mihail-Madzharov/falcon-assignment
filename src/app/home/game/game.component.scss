@@ -50,7 +50,7 @@ $player-two-color: #8fbc8f;;
     box-sizing: border-box;
     &:after {
         content: "";
-        background-image: url('../../assets/hand.svg');
+        background-image: url('../../../assets/hand.svg');
         background-repeat: none;
         height: 30px;
         width: 30px;
@@ -58,10 +58,10 @@ $player-two-color: #8fbc8f;;
         display: none;
     }
     &.man {
-        background-image: url('../../assets/man.svg');
+        background-image: url('../../../assets/man.svg');
     }
     &.woman {
-        background-image: url('../../assets/woman.svg');
+        background-image: url('../../../assets/woman.svg');
     }
 }
 .flc-game-board {
@@ -161,7 +161,7 @@ $player-two-color: #8fbc8f;;
 
     &--center {
         display: flex;
-        align-items: start;
+        align-items: flex-start;
         justify-content: center;
     }
     &--center-middle {
