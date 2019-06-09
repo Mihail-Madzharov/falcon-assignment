@@ -2,6 +2,7 @@
   "name": "falcon-assignment",
   "version": "0.0.0",
   "scripts": {
+    "ws_api": "node ./api",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
