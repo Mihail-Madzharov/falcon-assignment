@@ -1,21 +1,20 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { GameComponent } from "./game.component";
+import { GameBoardComponent } from "./game-board.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
-describe("GameComponent", () => {
-  let component: GameComponent;
-  let fixture: ComponentFixture<GameComponent>;
+describe("GameBoardComponent", () => {
+  let component: GameBoardComponent;
+  let fixture: ComponentFixture<GameBoardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GameComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      declarations: [GameBoardComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GameComponent);
+    fixture = TestBed.createComponent(GameBoardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

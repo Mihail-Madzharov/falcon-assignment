@@ -1,0 +1,156 @@
+$board-height: 512px;
+$piece-size: 75px;
+$piece-margin: 5px;
+$total-piece-size: ($piece-size + ($piece-margin * 2));
+$avatar-size: $piece-size;
+$avatar-margin: $piece-margin;
+$player-one-color: #faebd7;
+$player-two-color: #8fbc8f;
+
+@keyframes drop-in {
+  from {
+    transform: translateY(-$board-height);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.flc-game-piece {
+  box-sizing: border-box;
+  display: inline-block;
+  width: $piece-size;
+  height: $piece-size;
+  border-radius: 100%;
+  box-shadow: inset 0px -2px 2px rgba(0, 0, 0, 0.2),
+    inset 0px 2px 2px rgba(255, 255, 255, 0.5);
+  margin: $piece-margin;
+  pointer-events: none;
+  background-color: green;
+}
+
+.flc-game-board {
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: $board-height;
+  display: flex;
+  align-items: flex-end;
+  width: $total-piece-size * 7;
+  background: #fff;
+  box-shadow: inset 0 0px 10px rgba(0, 0, 0, 0.1);
+  > .board-col {
+    box-sizing: border-box;
+    height: 100%;
+    width: $total-piece-size;
+    border-right: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    &:last-child {
+      border: 0;
+      width: $total-piece-size;
+    }
+    &:before {
+      content: "";
+      box-sizing: border-box;
+      width: $piece-size;
+      height: $piece-size;
+      display: inline-block;
+      border-radius: 100%;
+      margin: $piece-margin;
+      border: 2px dashed #ccc;
+      transition: all 0.3s;
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+    &:hover {
+      background: #f9f9f9;
+      box-shadow: inset 0px -3px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      &:before {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    > .flc-game-piece {
+      animation: drop-in 0.5s linear;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.flc-card {
+  &-main {
+    margin: 10px;
+    width: 100%;
+  }
+  &-aside {
+    margin: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 390px;
+  }
+}
+.flc-layout {
+  padding: 50px 0;
+  &-bg {
+    background-color: #333;
+    background-image: repeating-linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.1) 1px,
+        transparent 1px,
+        transparent 60px
+      ),
+      repeating-linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.1) 1px,
+        transparent 1px,
+        transparent 60px
+      ),
+      linear-gradient(
+        60deg,
+        rgba(0, 0, 0, 0.1) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(0, 0, 0, 0.1) 75%,
+        rgba(0, 0, 0, 0.1)
+      ),
+      linear-gradient(
+        120deg,
+        rgba(0, 0, 0, 0.1) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(0, 0, 0, 0.1) 75%,
+        rgba(0, 0, 0, 0.1)
+      );
+    background-size: 70px 120px;
+  }
+
+  &--center {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  &--center-middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.flc-card {
+  &-main {
+    margin: 10px;
+    width: 100%;
+  }
+  &-aside {
+    margin: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 390px;
+  }
+}
