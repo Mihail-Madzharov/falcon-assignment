@@ -1,0 +1,8 @@
+$player-one-color: #faebd7;
+$player-two-color: #8fbc8f;
+$board-height: 512px;
+$piece-size: 75px;
+$piece-margin: 5px;
+$total-piece-size: ($piece-size + ($piece-margin * 2));
+$avatar-size: $piece-size;
+$avatar-margin: $piece-margin;

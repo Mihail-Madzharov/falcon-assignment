@@ -1,11 +1,4 @@
-$board-height: 512px;
-$piece-size: 75px;
-$piece-margin: 5px;
-$total-piece-size: ($piece-size + ($piece-margin * 2));
-$avatar-size: $piece-size;
-$avatar-margin: $piece-margin;
-$player-one-color: #faebd7;
-$player-two-color: #8fbc8f;
+@import "../../../../variables";
 
 @keyframes drop-in {
   from {
@@ -153,4 +146,12 @@ $player-two-color: #8fbc8f;
     box-sizing: border-box;
     width: 390px;
   }
+}
+
+.player-one-background {
+  background-color: $player-one-color;
+}
+
+.player-two-background {
+  background-color: $player-two-color;
 }

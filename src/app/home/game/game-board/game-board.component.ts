@@ -1,21 +1,21 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { generateMatrixModel, Matrix } from "src/app/lib/game-utilities/matrix";
+import { BoardCell } from "./board-cell";
 
 @Component({
   selector: "app-game-board",
   templateUrl: "./game-board.component.html",
   styleUrls: ["./game-board.component.scss"]
 })
-export class GameBoardComponent implements OnInit {
+export class GameBoardComponent {
+  @Input()
   public gameBoard: Matrix;
-  constructor() {
-    this.gameBoard = generateMatrixModel(7, 6);
-  }
 
-  ngOnInit() {}
+  @Output()
+  public selectCell = new EventEmitter<BoardCell>();
 
-  onClickHandler(row) {
+  onClickHandler(row: number) {
     const col = this.gameBoard[row].findIndex(value => value === 0);
-    this.gameBoard[row][col] = 1;
+    this.selectCell.emit({ row, col });
   }
 }
