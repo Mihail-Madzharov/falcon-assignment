@@ -1,4 +1,4 @@
-<div class="flc-layout--center">
+<div class="flc-layout--center board-padding">
   <div class="flc-game-board">
     <div
       class="board-col"
@@ -6,11 +6,12 @@
       (click)="onClickHandler(row)"
     >
       <div
-        *ngFor="let boardCol of gameBoard[row]; let col = index"
+        *ngFor="let boardCol of gameBoard[row]"
         [ngClass]="{
-          'flc-game-piece': gameBoard[row][col] !== 0,
-          'player-one-background': gameBoard[row][col] === 1,
-          'player-two-background': gameBoard[row][col] === 2
+          'flc-game-piece': boardCol !== 0,
+          'player-one-background': boardCol === 1,
+          'player-two-background': boardCol === 2,
+          'winning-pieces': boardCol === 3
         }"
       ></div>
     </div>

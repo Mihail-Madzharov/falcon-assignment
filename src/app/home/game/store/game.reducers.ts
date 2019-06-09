@@ -9,8 +9,9 @@ const initialState: GameState = {
 };
 
 function updateGameBoard(state: GameState, action: UpdateGameBoardAction) {
-  state.gameBoard = action.payload;
-  return state;
+  const newState = Object.assign({}, state);
+  newState.gameBoard = action.payload;
+  return newState;
 }
 
 const mapGameReducers: ActionsMap<GameState> = {

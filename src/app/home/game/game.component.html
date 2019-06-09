@@ -1,7 +1,10 @@
 <main class="mdl-layout__content flc-layout--center-middle">
   <div class="page-content flc-layout--center">
     <div class="mdl-card mdl-shadow--2dp flc-card-main">
-      <app-game-board [gameBoard]="gameBoard$ | async"></app-game-board>
+      <app-game-board
+        [gameBoard]="gameBoard$ | async"
+        (selectCell)="onCellSelect($event)"
+      ></app-game-board>
     </div>
     <div class="mdl-card mdl-shadow--2dp flc-card-aside">
       <div class="flc-game-avatar-group">
@@ -22,7 +25,7 @@
       </div>
       <div class="mdl-card__actions mdl-card--border">
         <button
-          onclick="alert('TODO: Implement Start Game route')"
+          (click)="onStartClickHandler()"
           class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
         >
           Start game
