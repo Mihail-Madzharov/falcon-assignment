@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { generateMatrixModel, Matrix } from "src/app/lib/game-utilities/matrix";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Matrix } from "src/app/lib/game-utilities/matrix";
 import { BoardCell } from "./board-cell";
 
 @Component({
@@ -15,7 +15,13 @@ export class GameBoardComponent {
   public selectCell = new EventEmitter<BoardCell>();
 
   onClickHandler(row: number) {
-    const col = this.gameBoard[row].findIndex(value => value === 0);
+    // the last index that row with zero will be
+    // the place that we want to place the piece
+    const col = this.gameBoard[row].lastIndexOf(0);
     this.selectCell.emit({ row, col });
+  }
+
+  trackByRow(index: number, row: number) {
+    return index;
   }
 }

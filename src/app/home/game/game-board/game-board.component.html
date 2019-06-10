@@ -2,11 +2,11 @@
   <div class="flc-game-board">
     <div
       class="board-col"
-      *ngFor="let boardRow of gameBoard; let row = index"
+      *ngFor="let boardRow of gameBoard; trackBy: trackByRow; let row = index"
       (click)="onClickHandler(row)"
     >
       <div
-        *ngFor="let boardCol of gameBoard[row]"
+        *ngFor="let boardCol of gameBoard[row]; trackBy: trackByRow"
         [ngClass]="{
           'flc-game-piece': boardCol !== 0,
           'player-one-background': boardCol === 1,

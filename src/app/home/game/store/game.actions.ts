@@ -1,6 +1,7 @@
 import { Action } from "@ngrx/store";
 import { Matrix } from "src/app/lib/game-utilities/matrix";
 import { BoardCell } from "../game-board/board-cell";
+import { GlobalAction } from "src/app/shared/global-action";
 
 export const GameActionTypes = {
   StartGame: "[GAME] This will start the game",
@@ -19,9 +20,11 @@ export class SelectCellAction implements Action {
   constructor(public payload: BoardCell) {}
 }
 
-export class UpdateGameBoardAction implements Action {
+export class UpdateGameBoardAction extends GlobalAction implements Action {
   readonly type: string = GameActionTypes.UpdateGameBoard;
-  constructor(public payload: Matrix) {}
+  constructor(public payload: Matrix) {
+    super();
+  }
 }
 
 export class UpdateCurrentUserIdAction implements Action {

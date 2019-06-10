@@ -1,6 +1,7 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { Observable } from "rxjs";
+import { Component, OnInit, Inject, OnDestroy } from "@angular/core";
+import { Observable, Subject } from "rxjs";
 import { Dispatcher } from "src/app/shared/types";
+import { tap, takeUntil } from "rxjs/operators";
 
 import { Matrix } from "src/app/lib/game-utilities/matrix";
 import { DispatcherToken } from "src/app/app.tokens";
@@ -16,13 +17,16 @@ import {
 } from "./store/game.actions";
 import { BoardCell } from "./game-board/board-cell";
 import { PlayersEnum } from "./players/players.enum";
+import { WebSocketService } from "../web-socket.service";
 
 @Component({
   selector: "app-game",
   templateUrl: "./game.component.html",
   styleUrls: ["./game.component.scss"]
 })
-export class GameComponent {
+export class GameComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject();
+
   constructor(
     @Inject(GameBoardToken)
     public gameBoard$: Observable<Matrix>,
@@ -31,8 +35,27 @@ export class GameComponent {
     @Inject(CurrentUserId)
     public currentUserId$: Observable<number>,
     @Inject(SecondUserId)
-    public secondUserId$: Observable<number>
+    public secondUserId$: Observable<number>,
+    private webSockets: WebSocketService
   ) {}
+  ngOnInit(): void {
+    this.webSockets.createWebSocketConnection();
+    this.webSockets
+      .getDownstream()
+      .pipe(
+        takeUntil(this.destroy$),
+        tap(action => {
+          if (action.data.message.globalType != null) {
+            this.dispatcher(action.data.message);
+          }
+        })
+      )
+      .subscribe();
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   onStartGameClickHandler() {
     this.dispatcher(new StartGameAction());
