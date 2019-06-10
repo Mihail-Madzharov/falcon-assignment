@@ -1,10 +1,16 @@
-<div class="flc-game-avatar-group">
+<div class="flc-game-avatar-group" [ngClass]="{ disable: gameStarted }">
   <span
     class="flc-game-avatar woman"
-    [ngClass]="{ 'player-one': isCurrentPlayer }"
+    [ngClass]="{
+      'player-one': isCurrentPlayer && gameStarted,
+      winner: winner,
+      'their-turn': theirTurn
+    }"
   ></span>
   <span>
     {{ label }} <br />
-    <i class="mdl-typography--caption-color-contrast">{{ subtitle }}</i>
+    <i *ngIf="gameStarted" class="mdl-typography--caption-color-contrast">{{
+      subtitle
+    }}</i>
   </span>
 </div>

@@ -1,5 +1,20 @@
 @import "../../../../../variables";
 
+@keyframes winner-jump {
+  from {
+    transform: translateY(0) rotateY(0);
+  }
+  to {
+    transform: translateY(-7px) rotateY(20deg);
+  }
+}
+
+.winner {
+  animation: winner-jump 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67) infinite
+    alternate-reverse !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
 .flc-game-avatar {
   display: inline-block;
   height: $avatar-size;
@@ -44,4 +59,25 @@
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+}
+
+@keyframes thinking {
+  from {
+    transform: rotateZ(-45deg) translate(-12px, 45px);
+  }
+  to {
+    transform: rotateZ(-50deg) translate(-12px, 45px);
+  }
+}
+
+.their-turn {
+  border-width: 2px;
+  &:after {
+    display: inline-block;
+    animation: thinking 2s linear infinite alternate-reverse !important;
+  }
+}
+
+.disable {
+  opacity: 0.5;
 }

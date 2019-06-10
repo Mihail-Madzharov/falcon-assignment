@@ -7,6 +7,15 @@ import { Component, Input } from "@angular/core";
 })
 export class AvatarComponent {
   @Input()
+  gameStarted: boolean;
+
+  @Input()
+  theirTurn: boolean;
+
+  @Input()
+  winner: boolean;
+
+  @Input()
   isCurrentPlayer: boolean;
 
   @Input()
