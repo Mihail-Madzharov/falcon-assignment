@@ -1,17 +1,14 @@
-<div class="flc-game-avatar-group">
-  <span class="flc-game-avatar woman player-one"></span>
-  <span>
-    Player one <br />
-    <i class="mdl-typography--caption-color-contrast">(you)</i>
-  </span>
-</div>
-<div class="flc-game-avatar-group">
-  <span class="flc-game-avatar man"></span>
-  <span>
-    Player two <br />
-    <i class="mdl-typography--caption-color-contrast">(waiting to join)</i>
-  </span>
-</div>
+<app-avatar
+  [isCurrentPlayer]="true"
+  [label]="'Player one'"
+  [subtitle]="'(you)'"
+></app-avatar>
+<app-avatar
+  [isCurrentPlayer]="false"
+  [label]="'Player two'"
+  [subtitle]="'(waiting to join)'"
+></app-avatar>
+
 <div class="mdl-card__actions mdl-card--border">
   <button
     class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"

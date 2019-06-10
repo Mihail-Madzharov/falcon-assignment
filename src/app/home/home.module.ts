@@ -12,13 +12,15 @@ import { gameReducer } from "./game/store/game.reducers";
 import { gameBoardSelector } from "./game/store/game.selectors";
 import { GameBoardToken } from "./game/store/game.token";
 import { PlayersComponent } from "./game/players/players.component";
+import { AvatarComponent } from "./game/players/avatar/avatar.component";
 
 @NgModule({
   declarations: [
     GameComponent,
     HomeComponent,
     GameBoardComponent,
-    PlayersComponent
+    PlayersComponent,
+    AvatarComponent
   ],
   providers: [
     {
