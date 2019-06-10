@@ -11,23 +11,9 @@ import {
 import { generateMatrixModel, Matrix } from "src/app/lib/game-utilities/matrix";
 import { GameBoardToken } from "./game.token";
 import { Observable } from "rxjs";
-import { checkFour } from "src/app/lib/game-utilities/check-four";
 const DEFAULT_MATRIX_ROW = 7;
 const DEFAULT_MATRIX_COL = 6;
 
-//  [2, 0, 0, 0, 0, 0, 0]
-//  [2, 0, 0, 0, 0, 0, 0]
-//  [2, 0, 0, 0, 0, 0, 0]
-//  [2, 0, 0, 0, 0, 0, 0]
-//  [0, 0, 0, 0, 0, 0, 0]
-//  [0, 0, 0, 0, 0, 0, 0]
-
-//  [1, 0, 0, 0, 0, 0, 0]
-//  [1, 0, 0, 0, 0, 0, 0]
-//  [1, 0, 0, 0, 0, 0, 0]
-//  [1, 0, 0, 0, 0, 0, 0]
-//  [0, 0, 0, 0, 0, 0, 0]
-//  [0, 0, 0, 0, 0, 0, 0]
 @Injectable()
 export class GameEffect {
   @Effect()

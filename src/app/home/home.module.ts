@@ -11,9 +11,15 @@ import { GameState } from "./game/store/game.state";
 import { gameReducer } from "./game/store/game.reducers";
 import { gameBoardSelector } from "./game/store/game.selectors";
 import { GameBoardToken } from "./game/store/game.token";
+import { PlayersComponent } from "./game/players/players.component";
 
 @NgModule({
-  declarations: [GameComponent, HomeComponent, GameBoardComponent],
+  declarations: [
+    GameComponent,
+    HomeComponent,
+    GameBoardComponent,
+    PlayersComponent
+  ],
   providers: [
     {
       provide: GameBoardToken,

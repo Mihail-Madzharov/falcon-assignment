@@ -7,36 +7,7 @@
       ></app-game-board>
     </div>
     <div class="mdl-card mdl-shadow--2dp flc-card-aside">
-      <div class="flc-game-avatar-group">
-        <span class="flc-game-avatar woman player-one"></span>
-        <span>
-          Player one <br />
-          <i class="mdl-typography--caption-color-contrast">(you)</i>
-        </span>
-      </div>
-      <div class="flc-game-avatar-group">
-        <span class="flc-game-avatar man"></span>
-        <span>
-          Player two <br />
-          <i class="mdl-typography--caption-color-contrast"
-            >(waiting to join)</i
-          >
-        </span>
-      </div>
-      <div class="mdl-card__actions mdl-card--border">
-        <button
-          (click)="onStartClickHandler()"
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
-        >
-          Start game
-        </button>
-        <button
-          onclick="alert('TODO: Implement Join Game route')"
-          class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect"
-        >
-          Join game
-        </button>
-      </div>
+      <app-players></app-players>
     </div>
   </div>
 </main>
