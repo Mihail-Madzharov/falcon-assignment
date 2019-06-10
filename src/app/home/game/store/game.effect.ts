@@ -1,16 +1,19 @@
 import { Injectable, Inject } from "@angular/core";
 import { Effect, Actions, ofType } from "@ngrx/effects";
-import { map, withLatestFrom } from "rxjs/operators";
+import { map, withLatestFrom, switchMap } from "rxjs/operators";
 
 import {
   StartGameAction,
   GameActionTypes,
   UpdateGameBoardAction,
-  SelectCellAction
+  SelectCellAction,
+  UpdateCurrentUserIdAction
 } from "./game.actions";
 import { generateMatrixModel, Matrix } from "src/app/lib/game-utilities/matrix";
 import { GameBoardToken } from "./game.token";
-import { Observable } from "rxjs";
+import { Observable, from } from "rxjs";
+import { PlayersEnum } from "../players/players.enum";
+
 const DEFAULT_MATRIX_ROW = 7;
 const DEFAULT_MATRIX_COL = 6;
 
@@ -19,10 +22,13 @@ export class GameEffect {
   @Effect()
   startGame$ = this.actions$.pipe(
     ofType<StartGameAction>(GameActionTypes.StartGame),
-    map(_ => {
-      return new UpdateGameBoardAction(
-        generateMatrixModel(DEFAULT_MATRIX_ROW, DEFAULT_MATRIX_COL)
-      );
+    switchMap(_ => {
+      return from([
+        new UpdateGameBoardAction(
+          generateMatrixModel(DEFAULT_MATRIX_ROW, DEFAULT_MATRIX_COL)
+        ),
+        new UpdateCurrentUserIdAction(PlayersEnum.PlayerOne)
+      ]);
     })
   );
 

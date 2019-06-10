@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 @Component({
   selector: "app-players",
@@ -6,6 +6,23 @@ import { Component, OnInit, Input } from "@angular/core";
   styleUrls: ["./players.component.scss"]
 })
 export class PlayersComponent {
+  @Output()
+  startGame = new EventEmitter<boolean>();
+
+  @Output()
+  joinGame = new EventEmitter();
+
   @Input()
-  isGameStarted: boolean;
+  secondUserId: number;
+
+  @Input()
+  currentUserId: number;
+
+  onStartGameHandler() {
+    this.startGame.emit();
+  }
+
+  onJoinGame() {
+    this.joinGame.emit();
+  }
 }

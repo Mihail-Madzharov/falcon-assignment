@@ -1,23 +1,28 @@
 <app-avatar
-  [isCurrentPlayer]="true"
+  [isCurrentPlayer]="currentUserId === 1"
   [label]="'Player one'"
   [subtitle]="'(you)'"
+  [gameStarted]="currentUserId !== -1"
 ></app-avatar>
+
 <app-avatar
-  [isCurrentPlayer]="false"
+  [isCurrentPlayer]="currentUserId === 2"
   [label]="'Player two'"
-  [subtitle]="'(waiting to join)'"
+  [subtitle]="secondUserId != -1 ? '(waiting to join)' : ''"
+  [gameStarted]="currentUserId !== -1"
 ></app-avatar>
 
 <div class="mdl-card__actions mdl-card--border">
   <button
     class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
+    (click)="onStartGameHandler()"
+    [disabled]="currentUserId !== -1"
   >
     Start game
   </button>
   <button
-    onclick="alert('TODO: Implement Join Game route')"
     class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect"
+    [disabled]="secondUserId !== 2"
   >
     Join game
   </button>

@@ -1,11 +1,19 @@
 import { Action } from "@ngrx/store";
 
 import { ActionsMap } from "src/app/shared/reducer.model";
-import { UpdateGameBoardAction, GameActionTypes } from "./game.actions";
+import {
+  UpdateGameBoardAction,
+  GameActionTypes,
+  StartGameAction,
+  UpdateCurrentUserIdAction,
+  UpdateSecondUserId
+} from "./game.actions";
 import { GameState } from "./game.state";
 
 const initialState: GameState = {
-  gameBoard: []
+  gameBoard: [],
+  currentUserId: -1,
+  secondUserId: -1
 };
 
 function updateGameBoard(state: GameState, action: UpdateGameBoardAction) {
@@ -14,8 +22,25 @@ function updateGameBoard(state: GameState, action: UpdateGameBoardAction) {
   return newState;
 }
 
+function updateCurrentUserId(
+  state: GameState,
+  action: UpdateCurrentUserIdAction
+) {
+  const newState = Object.assign({}, state);
+  newState.currentUserId = action.payload;
+  return newState;
+}
+
+function updateSecondUserId(state: GameState, action: UpdateSecondUserId) {
+  const newState = Object.assign({}, state);
+  newState.secondUserId = action.payload;
+  return newState;
+}
+
 const mapGameReducers: ActionsMap<GameState> = {
-  [GameActionTypes.UpdateGameBoard]: updateGameBoard
+  [GameActionTypes.UpdateGameBoard]: updateGameBoard,
+  [GameActionTypes.UpdateCurrentUserId]: updateCurrentUserId,
+  [GameActionTypes.UpdateSecondUserId]: updateSecondUserId
 };
 
 export function gameReducer(state: GameState = initialState, action: Action) {

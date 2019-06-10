@@ -7,3 +7,13 @@ export const gameBoardSelector = createSelector(
   featureSelector,
   state => state.gameBoard
 );
+
+export const currentUserIdSelector = createSelector(
+  featureSelector,
+  state => state.currentUserId
+);
+
+export const secondUserId = createSelector(
+  featureSelector,
+  state => state.secondUserId
+);

@@ -7,7 +7,12 @@
       ></app-game-board>
     </div>
     <div class="mdl-card mdl-shadow--2dp flc-card-aside">
-      <app-players></app-players>
+      <app-players
+        (startGame)="onStartGameClickHandler()"
+        [currentUserId]="currentUserId$ | async"
+        [secondUserId]="secondUserId$ | async"
+        (joinGame)="onJoinGame()"
+      ></app-players>
     </div>
   </div>
 </main>

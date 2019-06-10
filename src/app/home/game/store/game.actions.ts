@@ -5,7 +5,9 @@ import { BoardCell } from "../game-board/board-cell";
 export const GameActionTypes = {
   StartGame: "[GAME] This will start the game",
   UpdateGameBoard: "[GAME] This will update the game board matrix",
-  SelectCell: "[GAME] This will select a cell"
+  SelectCell: "[GAME] This will select a cell",
+  UpdateCurrentUserId: "[GAME] This will update current user Id",
+  UpdateSecondUserId: "[GAME] This will update the second user Id"
 };
 
 export class StartGameAction implements Action {
@@ -20,4 +22,14 @@ export class SelectCellAction implements Action {
 export class UpdateGameBoardAction implements Action {
   readonly type: string = GameActionTypes.UpdateGameBoard;
   constructor(public payload: Matrix) {}
+}
+
+export class UpdateCurrentUserIdAction implements Action {
+  readonly type: string = GameActionTypes.UpdateCurrentUserId;
+  constructor(public payload: number) {}
+}
+
+export class UpdateSecondUserId implements Action {
+  readonly type: string = GameActionTypes.UpdateSecondUserId;
+  constructor(public payload: number) {}
 }
