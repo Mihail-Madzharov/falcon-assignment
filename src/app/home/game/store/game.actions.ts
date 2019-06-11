@@ -20,7 +20,7 @@ export class StartGameAction extends GlobalAction implements Action {
   }
 }
 
-export class ToggleGameAction extends GlobalAction implements Action {
+export class ToggleGameStartAction extends GlobalAction implements Action {
   readonly type: string = GameActionTypes.ToggleStartGame;
   constructor(public payload: boolean) {
     super();

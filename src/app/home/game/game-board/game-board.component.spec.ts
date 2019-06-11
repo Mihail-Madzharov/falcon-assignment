@@ -25,6 +25,7 @@ describe("GameBoardComponent", () => {
     it("should emit row and col onClickHandler", () => {
       // Arrange
       component.gameBoard = [[0]];
+      component.canUserPlay = true;
       const spy = spyOn(component.selectCell, "emit");
       // Act
       component.onClickHandler(0);
@@ -33,15 +34,28 @@ describe("GameBoardComponent", () => {
       expect(spy).toHaveBeenCalledWith({ row: 0, col: 0 });
     });
 
-    it("should emit col index where the first col value is 0", () => {
+    it("should emit col index where the first col value is 0 when canUserPlay is true", () => {
       // Arrange
       component.gameBoard = [[1, 1, 1, 0]];
+      component.canUserPlay = true;
       const spy = spyOn(component.selectCell, "emit");
       // Act
       component.onClickHandler(0);
 
       // Assert
       expect(spy).toHaveBeenCalledWith({ row: 0, col: 3 });
+    });
+
+    it("should not emit col index if canUserPlay if false", () => {
+      // Arrange
+      component.gameBoard = [[1, 1, 1, 0]];
+      component.canUserPlay = false;
+      const spy = spyOn(component.selectCell, "emit");
+      // Act
+      component.onClickHandler(0);
+
+      // Assert
+      expect(spy).not.toHaveBeenCalled();
     });
   });
 });

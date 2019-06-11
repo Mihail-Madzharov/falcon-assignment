@@ -8,7 +8,8 @@ import {
   GameBoardToken,
   CurrentUserIdToken,
   SecondUserIdToken,
-  GameStartedToken
+  GameStartedToken,
+  LastPlayingPlayerId
 } from "./store/game.token";
 import { DispatcherToken } from "src/app/app.tokens";
 import { WebSocketService } from "../web-socket.service";
@@ -48,6 +49,10 @@ describe("GameComponent", () => {
         },
         {
           provide: GameStartedToken,
+          useValue: () => {}
+        },
+        {
+          provide: LastPlayingPlayerId,
           useValue: () => {}
         },
         WebSocketService
@@ -92,7 +97,6 @@ describe("GameComponent", () => {
 
     // webSocket Assert
     expect(webSocketsActionContainers[0].type).toBe(GameActionTypes.StartGame);
-    expect(webSocketsActionContainers[0].payload).toBeTruthy();
     expect(webSocketsActionContainers[1].type).toBe(
       GameActionTypes.UpdateSecondUserId
     );
@@ -100,7 +104,6 @@ describe("GameComponent", () => {
 
     // Dispatcher Assert
     expect(dispatcherActionContainers[0].type).toBe(GameActionTypes.StartGame);
-    expect(dispatcherActionContainers[0].payload).toBeTruthy();
     expect(dispatcherActionContainers[1].type).toBe(
       GameActionTypes.UpdateCurrentUserId
     );
@@ -114,24 +117,13 @@ describe("GameComponent", () => {
       dispatcherActionContainers.push(action);
     };
 
-    const webSocketsActionContainers = [];
-    const mockWebSocketService = {
-      send: action => {
-        webSocketsActionContainers.push(action);
-      }
-    };
     const comp = setup()
       .default()
       .mockDispatcher(mockDispatcher)
-      .mockWebSocketService(mockWebSocketService)
       .build();
 
     // Act
     comp.onCellSelect({ col: 1, row: 1 });
-
-    // webSocket Assert
-    expect(webSocketsActionContainers[0].type).toBe(GameActionTypes.SelectCell);
-    expect(webSocketsActionContainers[0].payload).toEqual({ col: 1, row: 1 });
 
     // Dispatcher Assert
     expect(dispatcherActionContainers[0].type).toBe(GameActionTypes.SelectCell);
@@ -162,17 +154,39 @@ describe("GameComponent", () => {
 
     // webSocket Assert
     expect(webSocketsActionContainers[0].type).toBe(
+      GameActionTypes.ToggleStartGame
+    );
+    expect(webSocketsActionContainers[0].payload).toBeTruthy();
+
+    expect(webSocketsActionContainers[1].type).toBe(
       GameActionTypes.UpdateSecondUserId
     );
-    expect(webSocketsActionContainers[0].payload).toEqual(
-      PlayersEnum.PlayerOne
+    expect(webSocketsActionContainers[1].payload).toEqual(
+      PlayersEnum.PlayerTwo
+    );
+
+    expect(webSocketsActionContainers[2].type).toBe(
+      GameActionTypes.UpdateLastPlayingPlayer
+    );
+    expect(webSocketsActionContainers[2].payload).toEqual(
+      PlayersEnum.PlayerTwo
     );
 
     // Dispatcher Assert
     expect(dispatcherActionContainers[0].type).toBe(
+      GameActionTypes.ToggleStartGame
+    );
+    expect(dispatcherActionContainers[0].payload).toBeTruthy();
+    expect(dispatcherActionContainers[1].type).toBe(
       GameActionTypes.UpdateCurrentUserId
     );
-    expect(dispatcherActionContainers[0].payload).toEqual(
+    expect(dispatcherActionContainers[1].payload).toEqual(
+      PlayersEnum.PlayerTwo
+    );
+    expect(dispatcherActionContainers[2].type).toBe(
+      GameActionTypes.UpdateLastPlayingPlayer
+    );
+    expect(dispatcherActionContainers[2].payload).toEqual(
       PlayersEnum.PlayerTwo
     );
   });
@@ -234,6 +248,7 @@ describe("GameComponent", () => {
     let currentUserId$;
     let secondUserId$;
     let gameStarted$;
+    let lastPlayingPlayerId$;
     let dispatcher;
     let webSockets;
     const builder = {
@@ -247,7 +262,8 @@ describe("GameComponent", () => {
           currentUserId$,
           secondUserId$,
           webSockets,
-          gameStarted$
+          gameStarted$,
+          lastPlayingPlayerId$
         );
       },
 
@@ -256,6 +272,7 @@ describe("GameComponent", () => {
         currentUserId$ = of(1);
         secondUserId$ = of(1);
         gameStarted$ = of(false);
+        lastPlayingPlayerId$ = of(0);
         dispatcher = () => {};
         webSockets = {} as any;
         return builder;

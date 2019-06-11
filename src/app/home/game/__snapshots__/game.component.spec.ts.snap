@@ -7,6 +7,7 @@ exports[`GameComponent should match snapshot 1`] = `
   dispatcher={[Function Function]}
   gameBoard$={[Function Object]}
   gameStarted$={[Function Function]}
+  lastPlayingPlayerId$={[Function Function]}
   secondUserId$={[Function Function]}
   webSockets={[Function WebSocketService]}
 >

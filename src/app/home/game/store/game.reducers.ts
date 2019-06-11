@@ -6,7 +6,7 @@ import {
   GameActionTypes,
   UpdateCurrentUserIdAction,
   UpdateSecondUserId,
-  ToggleGameAction,
+  ToggleGameStartAction,
   UpdateLastPlayingPlayer as UpdateNextPlayerIdTurnAction
 } from "./game.actions";
 import { GameState } from "./game.state";
@@ -41,7 +41,7 @@ function updateSecondUserId(state: GameState, action: UpdateSecondUserId) {
   return newState;
 }
 
-function toggleGameStart(state: GameState, action: ToggleGameAction) {
+function toggleGameStart(state: GameState, action: ToggleGameStartAction) {
   const newState = Object.assign({}, state);
   newState.gameStarted = action.payload;
   return newState;

@@ -17,7 +17,7 @@ import {
   SelectCellAction,
   UpdateSecondUserId,
   UpdateCurrentUserIdAction,
-  ToggleGameAction,
+  ToggleGameStartAction,
   UpdateLastPlayingPlayer
 } from "./store/game.actions";
 import { BoardCell } from "./game-board/board-cell";
@@ -82,13 +82,13 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   onJoinGame() {
-    this.webSockets.send(new ToggleGameAction(true));
+    this.webSockets.send(new ToggleGameStartAction(true));
     this.webSockets.send(new UpdateSecondUserId(PlayersEnum.PlayerTwo));
     this.webSockets.send(new UpdateLastPlayingPlayer(PlayersEnum.PlayerTwo));
 
+    this.dispatcher(new ToggleGameStartAction(true));
     this.dispatcher(new UpdateCurrentUserIdAction(PlayersEnum.PlayerTwo));
     this.dispatcher(new UpdateLastPlayingPlayer(PlayersEnum.PlayerTwo));
-    this.dispatcher(new ToggleGameAction(true));
   }
 
   checkIfPlayerCanPlay(
