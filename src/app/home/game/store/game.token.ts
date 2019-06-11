@@ -7,10 +7,14 @@ export const GameBoardToken = new InjectionToken<Observable<Matrix>>(
   "This will provide the game board"
 );
 
-export const CurrentUserId = new InjectionToken<Observable<number>>(
+export const CurrentUserIdToken = new InjectionToken<Observable<number>>(
   "This will provide the current user id"
 );
 
-export const SecondUserId = new InjectionToken<Observable<number>>(
+export const SecondUserIdToken = new InjectionToken<Observable<number>>(
   "This will provide the second user id"
+);
+
+export const GameStartedToken = new InjectionToken<Observable<boolean>>(
+  "This will provide the game started state"
 );

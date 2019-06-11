@@ -6,14 +6,15 @@ import {
   GameActionTypes,
   StartGameAction,
   UpdateCurrentUserIdAction,
-  UpdateSecondUserId
+  UpdateSecondUserId,
 } from "./game.actions";
 import { GameState } from "./game.state";
 
 const initialState: GameState = {
   gameBoard: [],
   currentUserId: -1,
-  secondUserId: -1
+  secondUserId: -1,
+  gameStarted: false
 };
 
 function updateGameBoard(state: GameState, action: UpdateGameBoardAction) {
@@ -37,10 +38,17 @@ function updateSecondUserId(state: GameState, action: UpdateSecondUserId) {
   return newState;
 }
 
+function startGame(state: GameState, action: StartGameAction) {
+  const newState = Object.assign({}, state);
+  newState.gameStarted = action.payload;
+  return newState;
+}
+
 const mapGameReducers: ActionsMap<GameState> = {
   [GameActionTypes.UpdateGameBoard]: updateGameBoard,
   [GameActionTypes.UpdateCurrentUserId]: updateCurrentUserId,
-  [GameActionTypes.UpdateSecondUserId]: updateSecondUserId
+  [GameActionTypes.UpdateSecondUserId]: updateSecondUserId,
+  [GameActionTypes.StartGame]: startGame
 };
 
 export function gameReducer(state: GameState = initialState, action: Action) {

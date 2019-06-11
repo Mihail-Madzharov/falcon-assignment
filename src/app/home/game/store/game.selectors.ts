@@ -17,3 +17,8 @@ export const secondUserId = createSelector(
   featureSelector,
   state => state.secondUserId
 );
+
+export const gameStarted = createSelector(
+  featureSelector,
+  state => state.gameStarted
+);

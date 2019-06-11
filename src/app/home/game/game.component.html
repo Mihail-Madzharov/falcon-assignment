@@ -11,6 +11,7 @@
         (startGame)="onStartGameClickHandler()"
         [currentUserId]="currentUserId$ | async"
         [secondUserId]="secondUserId$ | async"
+        [gameStarted]="gameStarted$ | async"
         (joinGame)="onJoinGame()"
       ></app-players>
     </div>

@@ -7,13 +7,15 @@ import { Matrix } from "src/app/lib/game-utilities/matrix";
 import { DispatcherToken } from "src/app/app.tokens";
 import {
   GameBoardToken,
-  CurrentUserId,
-  SecondUserId
+  CurrentUserIdToken,
+  SecondUserIdToken,
+  GameStartedToken
 } from "./store/game.token";
 import {
   StartGameAction,
   SelectCellAction,
-  UpdateSecondUserId
+  UpdateSecondUserId,
+  UpdateCurrentUserIdAction
 } from "./store/game.actions";
 import { BoardCell } from "./game-board/board-cell";
 import { PlayersEnum } from "./players/players.enum";
@@ -32,11 +34,13 @@ export class GameComponent implements OnInit, OnDestroy {
     public gameBoard$: Observable<Matrix>,
     @Inject(DispatcherToken)
     private dispatcher: Dispatcher,
-    @Inject(CurrentUserId)
+    @Inject(CurrentUserIdToken)
     public currentUserId$: Observable<number>,
-    @Inject(SecondUserId)
+    @Inject(SecondUserIdToken)
     public secondUserId$: Observable<number>,
-    private webSockets: WebSocketService
+    private webSockets: WebSocketService,
+    @Inject(GameStartedToken)
+    public gameStarted$: Observable<boolean>
   ) {}
   ngOnInit(): void {
     this.webSockets.createWebSocketConnection();
@@ -58,7 +62,11 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   onStartGameClickHandler() {
-    this.dispatcher(new StartGameAction());
+    this.webSockets.send(new StartGameAction(true));
+    this.webSockets.send(new UpdateSecondUserId(PlayersEnum.PlayerOne));
+
+    this.dispatcher(new StartGameAction(true));
+    this.dispatcher(new UpdateCurrentUserIdAction(PlayersEnum.PlayerOne));
   }
 
   onCellSelect(cell: BoardCell) {
@@ -66,6 +74,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   onJoinGame() {
-    this.dispatcher(new UpdateSecondUserId(PlayersEnum.PlayerTwo));
+    this.dispatcher(new UpdateCurrentUserIdAction(PlayersEnum.PlayerTwo));
+    this.webSockets.send(new UpdateSecondUserId(PlayersEnum.PlayerOne));
   }
 }

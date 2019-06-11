@@ -11,8 +11,11 @@ export const GameActionTypes = {
   UpdateSecondUserId: "[GAME] This will update the second user Id"
 };
 
-export class StartGameAction implements Action {
+export class StartGameAction extends GlobalAction implements Action {
   readonly type: string = GameActionTypes.StartGame;
+  constructor(public payload: boolean) {
+    super();
+  }
 }
 
 export class SelectCellAction implements Action {
@@ -32,7 +35,9 @@ export class UpdateCurrentUserIdAction implements Action {
   constructor(public payload: number) {}
 }
 
-export class UpdateSecondUserId implements Action {
+export class UpdateSecondUserId extends GlobalAction implements Action {
   readonly type: string = GameActionTypes.UpdateSecondUserId;
-  constructor(public payload: number) {}
+  constructor(public payload: number) {
+    super();
+  }
 }

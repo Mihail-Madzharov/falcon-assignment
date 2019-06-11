@@ -5,4 +5,5 @@ export class GameState {
   public gameBoard: Matrix;
   public currentUserId: number;
   public secondUserId: number;
+  public gameStarted: boolean;
 }

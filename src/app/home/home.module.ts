@@ -12,12 +12,14 @@ import { gameReducer } from "./game/store/game.reducers";
 import {
   gameBoardSelector,
   currentUserIdSelector,
-  secondUserId
+  secondUserId,
+  gameStarted
 } from "./game/store/game.selectors";
 import {
   GameBoardToken,
-  CurrentUserId,
-  SecondUserId
+  CurrentUserIdToken,
+  SecondUserIdToken,
+  GameStartedToken
 } from "./game/store/game.token";
 import { PlayersComponent } from "./game/players/players.component";
 import { AvatarComponent } from "./game/players/avatar/avatar.component";
@@ -37,13 +39,18 @@ import { AvatarComponent } from "./game/players/avatar/avatar.component";
       deps: [Store]
     },
     {
-      provide: CurrentUserId,
+      provide: CurrentUserIdToken,
       useFactory: store => store.select(currentUserIdSelector),
       deps: [Store]
     },
     {
-      provide: SecondUserId,
+      provide: SecondUserIdToken,
       useFactory: store => store.select(secondUserId),
+      deps: [Store]
+    },
+    {
+      provide: GameStartedToken,
+      useFactory: store => store.select(gameStarted),
       deps: [Store]
     }
   ],

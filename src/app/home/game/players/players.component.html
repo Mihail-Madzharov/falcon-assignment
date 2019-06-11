@@ -1,28 +1,29 @@
 <app-avatar
-  [isCurrentPlayer]="currentUserId === 1"
+  [isCurrentPlayer]="currentUserId === PLAYER_ONE_ID"
   [label]="'Player one'"
-  [subtitle]="'(you)'"
-  [gameStarted]="currentUserId !== -1"
+  [subtitle]="calculateCurrentUserSubLabel()"
+  [gameStarted]="gameStarted"
 ></app-avatar>
 
 <app-avatar
-  [isCurrentPlayer]="currentUserId === 2"
+  [isCurrentPlayer]="currentUserId === PLAYER_TWO_ID"
   [label]="'Player two'"
-  [subtitle]="secondUserId != -1 ? '(waiting to join)' : ''"
-  [gameStarted]="currentUserId !== -1"
+  [subtitle]="calculateSecondUserSubLabel()"
+  [gameStarted]="gameStarted"
 ></app-avatar>
 
 <div class="mdl-card__actions mdl-card--border">
   <button
     class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
     (click)="onStartGameHandler()"
-    [disabled]="currentUserId !== -1"
+    [disabled]="gameStarted"
   >
     Start game
   </button>
   <button
     class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect"
-    [disabled]="secondUserId !== 2"
+    [disabled]="gameStarted && currentUserId !== NO_PLAYER_SELECTED_ID"
+    (click)="onJoinGame()"
   >
     Join game
   </button>

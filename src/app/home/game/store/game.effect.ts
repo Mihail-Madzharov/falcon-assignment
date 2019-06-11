@@ -6,12 +6,10 @@ import {
   StartGameAction,
   GameActionTypes,
   UpdateGameBoardAction,
-  SelectCellAction,
-  UpdateCurrentUserIdAction,
-  UpdateSecondUserId
+  SelectCellAction
 } from "./game.actions";
 import { generateMatrixModel, Matrix } from "src/app/lib/game-utilities/matrix";
-import { GameBoardToken, CurrentUserId } from "./game.token";
+import { GameBoardToken, CurrentUserIdToken } from "./game.token";
 import { Observable, from } from "rxjs";
 import { PlayersEnum } from "../players/players.enum";
 import { WebSocketService } from "../../web-socket.service";
@@ -28,8 +26,7 @@ export class GameEffect {
       return from([
         new UpdateGameBoardAction(
           generateMatrixModel(DEFAULT_MATRIX_ROW, DEFAULT_MATRIX_COL)
-        ),
-        new UpdateCurrentUserIdAction(PlayersEnum.PlayerOne)
+        )
       ]);
     })
   );
@@ -52,7 +49,7 @@ export class GameEffect {
     private actions$: Actions,
     @Inject(GameBoardToken)
     public gameBoard$: Observable<Matrix>,
-    @Inject(CurrentUserId)
+    @Inject(CurrentUserIdToken)
     private currentUserId$: Observable<number>,
     private webSockets: WebSocketService
   ) {}
