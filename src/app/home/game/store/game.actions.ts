@@ -18,9 +18,11 @@ export class StartGameAction extends GlobalAction implements Action {
   }
 }
 
-export class SelectCellAction implements Action {
+export class SelectCellAction extends GlobalAction implements Action {
   readonly type: string = GameActionTypes.SelectCell;
-  constructor(public payload: BoardCell) {}
+  constructor(public payload: BoardCell) {
+    super();
+  }
 }
 
 export class UpdateGameBoardAction extends GlobalAction implements Action {

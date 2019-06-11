@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GameComponent should match snapshot 1`] = `
+<app-game
+  currentUserId$={[Function Function]}
+  destroy$={[Function Subject]}
+  dispatcher={[Function Function]}
+  gameBoard$={[Function Object]}
+  gameStarted$={[Function Function]}
+  secondUserId$={[Function Function]}
+  webSockets={[Function WebSocketService]}
+>
+  <main
+    class="mdl-layout__content flc-layout--center-middle"
+  >
+    <div
+      class="page-content flc-layout--center"
+    >
+      <div
+        class="mdl-card mdl-shadow--2dp flc-card-main"
+      >
+        <app-game-board />
+      </div>
+      <div
+        class="mdl-card mdl-shadow--2dp flc-card-aside"
+      >
+        <app-players />
+      </div>
+    </div>
+  </main>
+</app-game>
+`;

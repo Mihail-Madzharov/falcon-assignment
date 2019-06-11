@@ -11,7 +11,6 @@ import {
 import { generateMatrixModel, Matrix } from "src/app/lib/game-utilities/matrix";
 import { GameBoardToken, CurrentUserIdToken } from "./game.token";
 import { Observable, from } from "rxjs";
-import { PlayersEnum } from "../players/players.enum";
 import { WebSocketService } from "../../web-socket.service";
 
 const DEFAULT_MATRIX_ROW = 7;
@@ -40,7 +39,6 @@ export class GameEffect {
       const col = action.payload.col;
       matrix[row][col] = currentUserId;
 
-      this.webSockets.send(new UpdateGameBoardAction(matrix));
       return new UpdateGameBoardAction(matrix);
     })
   );
@@ -50,7 +48,6 @@ export class GameEffect {
     @Inject(GameBoardToken)
     public gameBoard$: Observable<Matrix>,
     @Inject(CurrentUserIdToken)
-    private currentUserId$: Observable<number>,
-    private webSockets: WebSocketService
+    private currentUserId$: Observable<number>
   ) {}
 }

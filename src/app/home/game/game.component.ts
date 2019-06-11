@@ -42,20 +42,23 @@ export class GameComponent implements OnInit, OnDestroy {
     @Inject(GameStartedToken)
     public gameStarted$: Observable<boolean>
   ) {}
+
   ngOnInit(): void {
     this.webSockets.createWebSocketConnection();
+
     this.webSockets
       .getDownstream()
       .pipe(
         takeUntil(this.destroy$),
-        tap(action => {
-          if (action.data.message.globalType != null) {
-            this.dispatcher(action.data.message);
+        tap(event => {
+          if (event.data.message.globalType != null) {
+            this.dispatcher(event.data.message);
           }
         })
       )
       .subscribe();
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -70,11 +73,13 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   onCellSelect(cell: BoardCell) {
+    this.webSockets.send(new SelectCellAction(cell));
+
     this.dispatcher(new SelectCellAction(cell));
   }
 
   onJoinGame() {
-    this.dispatcher(new UpdateCurrentUserIdAction(PlayersEnum.PlayerTwo));
     this.webSockets.send(new UpdateSecondUserId(PlayersEnum.PlayerOne));
+    this.dispatcher(new UpdateCurrentUserIdAction(PlayersEnum.PlayerTwo));
   }
 }
