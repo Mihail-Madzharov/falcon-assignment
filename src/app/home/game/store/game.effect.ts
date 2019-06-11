@@ -39,6 +39,8 @@ export class GameEffect {
       const col = action.payload.col;
       matrix[row][col] = currentUserId;
 
+      this.webSockets.send(new UpdateGameBoardAction(matrix));
+
       return new UpdateGameBoardAction(matrix);
     })
   );
@@ -48,6 +50,7 @@ export class GameEffect {
     @Inject(GameBoardToken)
     public gameBoard$: Observable<Matrix>,
     @Inject(CurrentUserIdToken)
-    private currentUserId$: Observable<number>
+    private currentUserId$: Observable<number>,
+    private webSockets: WebSocketService
   ) {}
 }

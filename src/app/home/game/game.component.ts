@@ -74,8 +74,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   onCellSelect(cell: BoardCell) {
-    this.webSockets.send(new SelectCellAction(cell));
-
     this.dispatcher(new SelectCellAction(cell));
   }
 
