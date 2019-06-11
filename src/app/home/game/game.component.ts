@@ -15,7 +15,8 @@ import {
   StartGameAction,
   SelectCellAction,
   UpdateSecondUserId,
-  UpdateCurrentUserIdAction
+  UpdateCurrentUserIdAction,
+  ToggleGameAction
 } from "./store/game.actions";
 import { BoardCell } from "./game-board/board-cell";
 import { PlayersEnum } from "./players/players.enum";
@@ -65,10 +66,10 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   onStartGameClickHandler() {
-    this.webSockets.send(new StartGameAction(true));
+    this.webSockets.send(new StartGameAction());
     this.webSockets.send(new UpdateSecondUserId(PlayersEnum.PlayerOne));
 
-    this.dispatcher(new StartGameAction(true));
+    this.dispatcher(new StartGameAction());
     this.dispatcher(new UpdateCurrentUserIdAction(PlayersEnum.PlayerOne));
   }
 
@@ -79,7 +80,9 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   onJoinGame() {
+    this.webSockets.send(new ToggleGameAction(true));
     this.webSockets.send(new UpdateSecondUserId(PlayersEnum.PlayerOne));
     this.dispatcher(new UpdateCurrentUserIdAction(PlayersEnum.PlayerTwo));
+    this.dispatcher(new ToggleGameAction(true));
   }
 }

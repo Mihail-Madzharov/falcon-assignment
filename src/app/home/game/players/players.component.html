@@ -2,27 +2,30 @@
   [isCurrentPlayer]="currentUserId === PLAYER_ONE_ID"
   [label]="'Player one'"
   [subtitle]="calculateCurrentUserSubLabel()"
-  [gameStarted]="gameStarted"
+  [gameStarted]="currentUserId === PLAYER_ONE_ID"
 ></app-avatar>
 
 <app-avatar
   [isCurrentPlayer]="currentUserId === PLAYER_TWO_ID"
   [label]="'Player two'"
   [subtitle]="calculateSecondUserSubLabel()"
-  [gameStarted]="gameStarted"
+  [gameStarted]="currentUserId === PLAYER_TWO_ID"
 ></app-avatar>
 
 <div class="mdl-card__actions mdl-card--border">
   <button
     class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
     (click)="onStartGameHandler()"
-    [disabled]="gameStarted"
+    [disabled]="
+      (!gameStarted && currentUserId !== NO_PLAYER_SELECTED_ID) ||
+      secondUserId !== NO_PLAYER_SELECTED_ID
+    "
   >
     Start game
   </button>
   <button
+    *ngIf="secondUserId !== -1 && !gameStarted"
     class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect"
-    [disabled]="gameStarted && currentUserId !== NO_PLAYER_SELECTED_ID"
     (click)="onJoinGame()"
   >
     Join game

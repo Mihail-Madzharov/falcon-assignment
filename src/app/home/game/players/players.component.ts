@@ -41,7 +41,10 @@ export class PlayersComponent {
   }
 
   calculateSecondUserSubLabel() {
-    if (this.secondUserId === this.NO_PLAYER_SELECTED_ID) {
+    if (
+      this.secondUserId === this.NO_PLAYER_SELECTED_ID &&
+      this.currentUserId === this.PLAYER_ONE_ID
+    ) {
       return "(waiting to join)";
     }
 
@@ -51,6 +54,12 @@ export class PlayersComponent {
   }
 
   calculateCurrentUserSubLabel() {
-    return this.currentUserId === this.PLAYER_ONE_ID ? "(you)" : "";
+    if (this.secondUserId !== this.NO_PLAYER_SELECTED_ID && !this.gameStarted) {
+      return "(waiting for you to join)";
+    }
+
+    if (this.currentUserId === this.PLAYER_ONE_ID) {
+      return "(you)";
+    }
   }
 }

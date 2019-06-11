@@ -4,9 +4,9 @@ import { ActionsMap } from "src/app/shared/reducer.model";
 import {
   UpdateGameBoardAction,
   GameActionTypes,
-  StartGameAction,
   UpdateCurrentUserIdAction,
   UpdateSecondUserId,
+  ToggleGameAction
 } from "./game.actions";
 import { GameState } from "./game.state";
 
@@ -38,7 +38,7 @@ function updateSecondUserId(state: GameState, action: UpdateSecondUserId) {
   return newState;
 }
 
-function startGame(state: GameState, action: StartGameAction) {
+function startGame(state: GameState, action: ToggleGameAction) {
   const newState = Object.assign({}, state);
   newState.gameStarted = action.payload;
   return newState;
@@ -48,7 +48,7 @@ const mapGameReducers: ActionsMap<GameState> = {
   [GameActionTypes.UpdateGameBoard]: updateGameBoard,
   [GameActionTypes.UpdateCurrentUserId]: updateCurrentUserId,
   [GameActionTypes.UpdateSecondUserId]: updateSecondUserId,
-  [GameActionTypes.StartGame]: startGame
+  [GameActionTypes.ToggleStartGame]: startGame
 };
 
 export function gameReducer(state: GameState = initialState, action: Action) {

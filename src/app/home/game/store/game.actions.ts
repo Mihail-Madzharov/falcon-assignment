@@ -8,16 +8,23 @@ export const GameActionTypes = {
   UpdateGameBoard: "[GAME] This will update the game board matrix",
   SelectCell: "[GAME] This will select a cell",
   UpdateCurrentUserId: "[GAME] This will update current user Id",
-  UpdateSecondUserId: "[GAME] This will update the second user Id"
+  UpdateSecondUserId: "[GAME] This will update the second user Id",
+  ToggleStartGame: "[Game] This will toggle the start game state"
 };
 
 export class StartGameAction extends GlobalAction implements Action {
   readonly type: string = GameActionTypes.StartGame;
-  constructor(public payload: boolean) {
+  constructor() {
     super();
   }
 }
 
+export class ToggleGameAction extends GlobalAction implements Action {
+  readonly type: string = GameActionTypes.ToggleStartGame;
+  constructor(public payload: boolean) {
+    super();
+  }
+}
 export class SelectCellAction extends GlobalAction implements Action {
   readonly type: string = GameActionTypes.SelectCell;
   constructor(public payload: BoardCell) {
