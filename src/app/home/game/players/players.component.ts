@@ -26,6 +26,9 @@ export class PlayersComponent {
   @Input()
   currentUserId: number;
 
+  @Input()
+  lastPlayingPlayerId: number;
+
   constructor() {
     this.PLAYER_ONE_ID = PlayersEnum.PlayerOne;
     this.PLAYER_TWO_ID = PlayersEnum.PlayerTwo;

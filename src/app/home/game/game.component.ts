@@ -9,14 +9,16 @@ import {
   GameBoardToken,
   CurrentUserIdToken,
   SecondUserIdToken,
-  GameStartedToken
+  GameStartedToken,
+  LastPlayingPlayerId
 } from "./store/game.token";
 import {
   StartGameAction,
   SelectCellAction,
   UpdateSecondUserId,
   UpdateCurrentUserIdAction,
-  ToggleGameAction
+  ToggleGameAction,
+  UpdateLastPlayingPlayer
 } from "./store/game.actions";
 import { BoardCell } from "./game-board/board-cell";
 import { PlayersEnum } from "./players/players.enum";
@@ -41,7 +43,9 @@ export class GameComponent implements OnInit, OnDestroy {
     public secondUserId$: Observable<number>,
     private webSockets: WebSocketService,
     @Inject(GameStartedToken)
-    public gameStarted$: Observable<boolean>
+    public gameStarted$: Observable<boolean>,
+    @Inject(LastPlayingPlayerId)
+    public lastPlayingPlayerId$: Observable<number>
   ) {}
 
   ngOnInit(): void {
@@ -79,8 +83,19 @@ export class GameComponent implements OnInit, OnDestroy {
 
   onJoinGame() {
     this.webSockets.send(new ToggleGameAction(true));
-    this.webSockets.send(new UpdateSecondUserId(PlayersEnum.PlayerOne));
+    this.webSockets.send(new UpdateSecondUserId(PlayersEnum.PlayerTwo));
+    this.webSockets.send(new UpdateLastPlayingPlayer(PlayersEnum.PlayerTwo));
+
     this.dispatcher(new UpdateCurrentUserIdAction(PlayersEnum.PlayerTwo));
+    this.dispatcher(new UpdateLastPlayingPlayer(PlayersEnum.PlayerTwo));
     this.dispatcher(new ToggleGameAction(true));
+  }
+
+  checkIfPlayerCanPlay(
+    gameStarted: boolean,
+    currentUserId: number,
+    lastPlayingPlayerId: number
+  ) {
+    return gameStarted && currentUserId !== lastPlayingPlayerId;
   }
 }

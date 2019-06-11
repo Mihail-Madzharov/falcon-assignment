@@ -22,3 +22,8 @@ export const gameStarted = createSelector(
   featureSelector,
   state => state.gameStarted
 );
+
+export const lastPlayingPlayerId = createSelector(
+  featureSelector,
+  state => state.lastPlayingPlayer
+);

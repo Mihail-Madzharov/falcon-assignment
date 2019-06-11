@@ -9,7 +9,8 @@ export const GameActionTypes = {
   SelectCell: "[GAME] This will select a cell",
   UpdateCurrentUserId: "[GAME] This will update current user Id",
   UpdateSecondUserId: "[GAME] This will update the second user Id",
-  ToggleStartGame: "[Game] This will toggle the start game state"
+  ToggleStartGame: "[Game] This will toggle the start game state",
+  UpdateLastPlayingPlayer: "[Game] This will update the next player id"
 };
 
 export class StartGameAction extends GlobalAction implements Action {
@@ -46,6 +47,13 @@ export class UpdateCurrentUserIdAction implements Action {
 
 export class UpdateSecondUserId extends GlobalAction implements Action {
   readonly type: string = GameActionTypes.UpdateSecondUserId;
+  constructor(public payload: number) {
+    super();
+  }
+}
+
+export class UpdateLastPlayingPlayer extends GlobalAction implements Action {
+  readonly type: string = GameActionTypes.UpdateLastPlayingPlayer;
   constructor(public payload: number) {
     super();
   }

@@ -6,4 +6,5 @@ export class GameState {
   public currentUserId: number;
   public secondUserId: number;
   public gameStarted: boolean;
+  public lastPlayingPlayer: number;
 }

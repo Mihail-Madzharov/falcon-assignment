@@ -1,12 +1,13 @@
 import { Injectable, Inject } from "@angular/core";
 import { Effect, Actions, ofType } from "@ngrx/effects";
-import { map, withLatestFrom, switchMap, tap } from "rxjs/operators";
+import { map, withLatestFrom, switchMap } from "rxjs/operators";
 
 import {
   StartGameAction,
   GameActionTypes,
   UpdateGameBoardAction,
-  SelectCellAction
+  SelectCellAction,
+  UpdateLastPlayingPlayer
 } from "./game.actions";
 import { generateMatrixModel, Matrix } from "src/app/lib/game-utilities/matrix";
 import { GameBoardToken, CurrentUserIdToken } from "./game.token";
@@ -34,14 +35,18 @@ export class GameEffect {
   selectCell$ = this.actions$.pipe(
     ofType<SelectCellAction>(GameActionTypes.SelectCell),
     withLatestFrom(this.gameBoard$, this.currentUserId$),
-    map(([action, matrix, currentUserId]) => {
+    switchMap(([action, matrix, currentUserId]) => {
       const row = action.payload.row;
       const col = action.payload.col;
       matrix[row][col] = currentUserId;
 
       this.webSockets.send(new UpdateGameBoardAction(matrix));
+      this.webSockets.send(new UpdateLastPlayingPlayer(currentUserId));
 
-      return new UpdateGameBoardAction(matrix);
+      return [
+        new UpdateGameBoardAction(matrix),
+        new UpdateLastPlayingPlayer(currentUserId)
+      ];
     })
   );
 

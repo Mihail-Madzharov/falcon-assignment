@@ -6,15 +6,18 @@ import {
   GameActionTypes,
   UpdateCurrentUserIdAction,
   UpdateSecondUserId,
-  ToggleGameAction
+  ToggleGameAction,
+  UpdateLastPlayingPlayer as UpdateNextPlayerIdTurnAction
 } from "./game.actions";
 import { GameState } from "./game.state";
+import { PlayersEnum } from "../players/players.enum";
 
 const initialState: GameState = {
   gameBoard: [],
-  currentUserId: -1,
-  secondUserId: -1,
-  gameStarted: false
+  currentUserId: PlayersEnum.NoPlayerSelectedId,
+  secondUserId: PlayersEnum.NoPlayerSelectedId,
+  gameStarted: false,
+  lastPlayingPlayer: PlayersEnum.NoPlayerSelectedId
 };
 
 function updateGameBoard(state: GameState, action: UpdateGameBoardAction) {
@@ -38,9 +41,18 @@ function updateSecondUserId(state: GameState, action: UpdateSecondUserId) {
   return newState;
 }
 
-function startGame(state: GameState, action: ToggleGameAction) {
+function toggleGameStart(state: GameState, action: ToggleGameAction) {
   const newState = Object.assign({}, state);
   newState.gameStarted = action.payload;
+  return newState;
+}
+
+function updateNextPlayerIdTurn(
+  state: GameState,
+  action: UpdateNextPlayerIdTurnAction
+) {
+  const newState = Object.assign({}, state);
+  newState.lastPlayingPlayer = action.payload;
   return newState;
 }
 
@@ -48,7 +60,8 @@ const mapGameReducers: ActionsMap<GameState> = {
   [GameActionTypes.UpdateGameBoard]: updateGameBoard,
   [GameActionTypes.UpdateCurrentUserId]: updateCurrentUserId,
   [GameActionTypes.UpdateSecondUserId]: updateSecondUserId,
-  [GameActionTypes.ToggleStartGame]: startGame
+  [GameActionTypes.ToggleStartGame]: toggleGameStart,
+  [GameActionTypes.UpdateLastPlayingPlayer]: updateNextPlayerIdTurn
 };
 
 export function gameReducer(state: GameState = initialState, action: Action) {

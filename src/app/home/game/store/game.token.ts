@@ -18,3 +18,7 @@ export const SecondUserIdToken = new InjectionToken<Observable<number>>(
 export const GameStartedToken = new InjectionToken<Observable<boolean>>(
   "This will provide the game started state"
 );
+
+export const LastPlayingPlayerId = new InjectionToken<Observable<number>>(
+  "This will provide the last playing player id"
+);

@@ -1,12 +1,12 @@
 <app-avatar
-  [isCurrentPlayer]="currentUserId === PLAYER_ONE_ID"
+  [isCurrentPlayer]="currentUserId !== lastPlayingPlayerId"
   [label]="'Player one'"
   [subtitle]="calculateCurrentUserSubLabel()"
   [gameStarted]="currentUserId === PLAYER_ONE_ID"
 ></app-avatar>
 
 <app-avatar
-  [isCurrentPlayer]="currentUserId === PLAYER_TWO_ID"
+  [isCurrentPlayer]="currentUserId !== lastPlayingPlayerId"
   [label]="'Player two'"
   [subtitle]="calculateSecondUserSubLabel()"
   [gameStarted]="currentUserId === PLAYER_TWO_ID"
