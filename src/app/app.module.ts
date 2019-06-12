@@ -2,6 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { StoreModule, Store } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
+import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -15,7 +16,8 @@ import { DispatcherToken } from "./app.tokens";
     AppRoutingModule,
     HomeModule,
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    SweetAlert2Module.forRoot()
   ],
   providers: [
     {
