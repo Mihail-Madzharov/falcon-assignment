@@ -17,6 +17,12 @@ export class PlayersComponent {
   startGame = new EventEmitter<boolean>();
 
   @Output()
+  newGame = new EventEmitter();
+
+  @Output()
+  leaveGame = new EventEmitter();
+
+  @Output()
   joinGame = new EventEmitter();
 
   @Input()
@@ -66,5 +72,13 @@ export class PlayersComponent {
     if (this.currentUserId === this.PLAYER_ONE_ID) {
       return "(you)";
     }
+  }
+
+  onNewGameClickHandler() {
+    this.newGame.emit();
+  }
+
+  onLeaveClickHandler() {
+    this.leaveGame.emit();
   }
 }

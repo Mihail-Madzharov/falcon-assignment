@@ -11,7 +11,8 @@ import {
   UpdateGameBoardAction,
   SelectCellAction,
   UpdateLastPlayingPlayer,
-  UpdateWinnerIdAction
+  UpdateWinnerIdAction,
+  StartNewGame
 } from "./game.actions";
 import { generateMatrixModel, Matrix } from "src/app/lib/game-utilities/matrix";
 import { GameBoardToken, CurrentUserIdToken } from "./game.token";
@@ -26,7 +27,7 @@ const DEFAULT_MATRIX_COL = 6;
 export class GameEffect {
   @Effect()
   startGame$ = this.actions$.pipe(
-    ofType<StartGameAction>(GameActionTypes.StartGame),
+    ofType(GameActionTypes.StartGame, GameActionTypes.StartNewGame),
     switchMap(_ => {
       return from([
         new UpdateGameBoardAction(

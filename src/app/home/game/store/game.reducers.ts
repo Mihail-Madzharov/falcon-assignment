@@ -8,7 +8,9 @@ import {
   UpdateSecondUserId,
   ToggleGameStartAction,
   UpdateLastPlayingPlayer,
-  UpdateWinnerIdAction
+  UpdateWinnerIdAction,
+  ResetGameStateAction,
+  StartNewGame
 } from "./game.actions";
 import { GameState } from "./game.state";
 import { PlayersEnum } from "../players/players.enum";
@@ -19,7 +21,7 @@ const initialState: GameState = {
   secondUserId: PlayersEnum.NoPlayerSelectedId,
   gameStarted: false,
   lastPlayingPlayer: PlayersEnum.NoPlayerSelectedId,
-  winnerId: 0
+  winnerId: null
 };
 
 function updateGameBoard(state: GameState, action: UpdateGameBoardAction) {
@@ -64,13 +66,27 @@ function updateWinner(state: GameState, action: UpdateWinnerIdAction) {
   return newState;
 }
 
+function startNewGame(state: GameState, action: StartNewGame) {
+  const newState = { ...initialState };
+  newState.currentUserId = state.currentUserId;
+  newState.secondUserId = state.secondUserId;
+  newState.gameStarted = true;
+  return newState;
+}
+
+function resetGameState(state: GameState, action: ResetGameStateAction) {
+  return initialState;
+}
+
 const mapGameReducers: ActionsMap<GameState> = {
   [GameActionTypes.UpdateGameBoard]: updateGameBoard,
   [GameActionTypes.UpdateCurrentUserId]: updateCurrentUserId,
   [GameActionTypes.UpdateSecondUserId]: updateSecondUserId,
   [GameActionTypes.ToggleStartGame]: toggleGameStart,
   [GameActionTypes.UpdateLastPlayingPlayer]: updateNextPlayerIdTurn,
-  [GameActionTypes.UpdateWinnerId]: updateWinner
+  [GameActionTypes.UpdateWinnerId]: updateWinner,
+  [GameActionTypes.StartNewGame]: startNewGame,
+  [GameActionTypes.ResetGameState]: resetGameState
 };
 
 export function gameReducer(state: GameState = initialState, action: Action) {

@@ -22,7 +22,7 @@
   [gameStarted]="currentUserId === PLAYER_TWO_ID"
 ></app-avatar>
 
-<div class="mdl-card__actions mdl-card--border">
+<div class="mdl-card__actions mdl-card--border" *ngIf="!gameStarted">
   <button
     class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
     (click)="onStartGameHandler()"
@@ -39,5 +39,22 @@
     (click)="onJoinGame()"
   >
     Join game
+  </button>
+</div>
+
+<div class="mdl-card__actions mdl-card--border" *ngIf="gameStarted">
+  <button
+    *ngIf="winnerId"
+    class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
+    (click)="onNewGameClickHandler()"
+  >
+    New game
+  </button>
+  <button
+    class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect"
+    (click)="onLeaveClickHandler()"
+    [disabled]="winnerId"
+  >
+    Leave game
   </button>
 </div>

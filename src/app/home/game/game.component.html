@@ -22,6 +22,8 @@
         [gameStarted]="gameStarted$ | async"
         [winnerId]="winnerId$ | async"
         (joinGame)="onJoinGame()"
+        (newGame)="onNewGameClickHandler()"
+        (leaveGame)="onLeaveGameClickHandler()"
       ></app-players>
     </div>
   </div>

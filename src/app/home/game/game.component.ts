@@ -19,7 +19,9 @@ import {
   UpdateSecondUserId,
   UpdateCurrentUserIdAction,
   ToggleGameStartAction,
-  UpdateLastPlayingPlayer
+  UpdateLastPlayingPlayer,
+  ResetGameStateAction,
+  StartNewGame
 } from "./store/game.actions";
 import { BoardCell } from "./game-board/board-cell";
 import { PlayersEnum } from "./players/players.enum";
@@ -100,5 +102,15 @@ export class GameComponent implements OnInit, OnDestroy {
     lastPlayingPlayerId: number
   ) {
     return gameStarted && currentUserId !== lastPlayingPlayerId;
+  }
+
+  onNewGameClickHandler() {
+    this.dispatcher(new StartNewGame());
+    this.webSockets.send(new StartNewGame());
+  }
+
+  onLeaveGameClickHandler() {
+    this.dispatcher(new ResetGameStateAction());
+    this.webSockets.send(new ResetGameStateAction());
   }
 }

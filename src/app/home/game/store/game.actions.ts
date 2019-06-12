@@ -12,7 +12,9 @@ export const GameActionTypes = {
   UpdateSecondUserId: "[GAME] This will update the second user Id",
   ToggleStartGame: "[Game] This will toggle the start game state",
   UpdateLastPlayingPlayer: "[Game] This will update the next player id",
-  UpdateWinnerId: "[Game] Update game winner"
+  UpdateWinnerId: "[Game] Update game winner",
+  ResetGameState: "[Game] Reset game state",
+  StartNewGame: "[Game] This will start a new game"
 };
 
 export class StartGameAction extends GlobalAction implements Action {
@@ -66,4 +68,11 @@ export class UpdateWinnerIdAction extends GlobalAction implements Action {
   constructor(public payload: number) {
     super();
   }
+}
+
+export class ResetGameStateAction extends GlobalAction implements Action {
+  readonly type: string = GameActionTypes.ResetGameState;
+}
+export class StartNewGame extends GlobalAction implements Action {
+  readonly type: string = GameActionTypes.StartNewGame;
 }
