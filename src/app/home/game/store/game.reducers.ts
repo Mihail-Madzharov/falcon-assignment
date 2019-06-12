@@ -7,7 +7,7 @@ import {
   UpdateCurrentUserIdAction,
   UpdateSecondUserId,
   ToggleGameStartAction,
-  UpdateLastPlayingPlayer as UpdateNextPlayerIdTurnAction
+  UpdateLastPlayingPlayer
 } from "./game.actions";
 import { GameState } from "./game.state";
 import { PlayersEnum } from "../players/players.enum";
@@ -49,7 +49,7 @@ function toggleGameStart(state: GameState, action: ToggleGameStartAction) {
 
 function updateNextPlayerIdTurn(
   state: GameState,
-  action: UpdateNextPlayerIdTurnAction
+  action: UpdateLastPlayingPlayer
 ) {
   const newState = Object.assign({}, state);
   newState.lastPlayingPlayer = action.payload;
