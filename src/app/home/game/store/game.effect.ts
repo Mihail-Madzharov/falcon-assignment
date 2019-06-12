@@ -56,6 +56,7 @@ export class GameEffect {
       ];
 
       // if the game is over we want to show it to the user
+      // so we replace the winning cells with the winner id
       if (result && result.pieces) {
         result.pieces.forEach(([winningRow, winningCol]) => {
           matrix[winningCol][winningRow] = PlayersEnum.Winner;

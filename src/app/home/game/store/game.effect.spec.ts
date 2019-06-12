@@ -9,7 +9,9 @@ import {
   UpdateGameBoardAction,
   SelectCellAction,
   UpdateLastPlayingPlayer,
-  GameActionTypes
+  GameActionTypes,
+  StartNewGame,
+  UpdateWinnerIdAction
 } from "./game.actions";
 import { GameBoardToken, CurrentUserIdToken } from "./game.token";
 import { generateMatrixModel, Matrix } from "src/app/lib/game-utilities/matrix";
@@ -71,9 +73,20 @@ describe("GameEffect", () => {
   });
 
   describe("startGame", () => {
-    it("should return an AddUserSuccess action, with the user, on success", () => {
+    it("should return UpdateGameBoard action on StartGameAction", () => {
       // Arrange
       const action = new StartGameAction();
+      const updateGameBoard = new UpdateGameBoardAction(matrix);
+      actions.stream = hot("a", { a: action });
+      const expected = cold("b", { b: updateGameBoard });
+
+      // Assert
+      expect(effects.startGame$).toBeObservable(expected);
+    });
+
+    it("should return UpdateGameBoard action on StartNewGameAction", () => {
+      // Arrange
+      const action = new StartNewGame();
       const updateGameBoard = new UpdateGameBoardAction(matrix);
       actions.stream = hot("a", { a: action });
       const expected = cold("b", { b: updateGameBoard });
@@ -88,7 +101,7 @@ describe("GameEffect", () => {
       // Arrange WebSocketService
       const webService: WebSocketService = TestBed.get(WebSocketService);
       const actionContainer = [];
-      webService.send = action => actionContainer.push(action);
+      webService.send = a => actionContainer.push(a);
 
       // Arrange effect
       const action = new SelectCellAction({ col: 0, row: 0 });
@@ -118,6 +131,64 @@ describe("GameEffect", () => {
         GameActionTypes.UpdateLastPlayingPlayer
       );
       expect(actionContainer[1].payload).toBe(currentUserId);
+    });
+
+    it("should return UpdateWinnerIdAction with the winner id ", () => {
+      // Arrange WebSocketService
+      const webService: WebSocketService = TestBed.get(WebSocketService);
+      const actionContainer = [];
+      webService.send = a => actionContainer.push(a);
+
+      // Arrange effect
+      const currentUserId = 1;
+      const winnerId = 3;
+
+      // we are setting up the expected matrix output
+      const expectedMatrix = generateMatrixModel(6, 7);
+
+      expectedMatrix[0][0] = winnerId;
+      expectedMatrix[0][1] = winnerId;
+      expectedMatrix[0][2] = winnerId;
+      expectedMatrix[0][3] = winnerId;
+      // then we arrange the expected actions
+      const updateGameBoard = new UpdateGameBoardAction(expectedMatrix);
+      const currentUserAction = new UpdateLastPlayingPlayer(currentUserId);
+      const updateWinnerIdAction = new UpdateWinnerIdAction(currentUserId);
+
+      // we are selecting the next cell for winning the game
+      const action = new SelectCellAction({ row: 0, col: 3 });
+      actions.stream = hot("a", { a: action });
+
+      const expected = cold("(bcd)", {
+        b: updateGameBoard,
+        c: currentUserAction,
+        d: updateWinnerIdAction
+      });
+      // then we update the matrix so it would be
+      // need one move for winning
+      const mockWiningMatrix = generateMatrixModel(6, 7);
+      mockWiningMatrix[0][0] = currentUserId;
+      mockWiningMatrix[0][1] = currentUserId;
+      mockWiningMatrix[0][2] = currentUserId;
+
+      // Act
+      gameBoard.next(mockWiningMatrix);
+      currentUserId$.next(currentUserId);
+
+      // Assert
+      // first we expect the observables
+      // that would be returned
+      expect(effects.selectCell$).toBeObservable(expected);
+      // then we check the actions send to the other user
+      expect(actionContainer[0].type).toBe(GameActionTypes.UpdateWinnerId);
+      expect(actionContainer[0].payload).toStrictEqual(currentUserId);
+
+      expect(actionContainer[1].type).toBe(GameActionTypes.UpdateGameBoard);
+      expect(actionContainer[1].payload).toStrictEqual(expectedMatrix);
+      expect(actionContainer[2].type).toBe(
+        GameActionTypes.UpdateLastPlayingPlayer
+      );
+      expect(actionContainer[2].payload).toBe(currentUserId);
     });
   });
 });
