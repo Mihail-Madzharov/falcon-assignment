@@ -1,24 +1,23 @@
 import { Injectable, Inject } from "@angular/core";
 import { Effect, Actions, ofType } from "@ngrx/effects";
-import { withLatestFrom, switchMap } from "rxjs/operators";
+import { withLatestFrom, switchMap, catchError } from "rxjs/operators";
 import { Action } from "@ngrx/store";
-import { Observable, from } from "rxjs";
+import { Observable, from, of } from "rxjs";
 
 import { Winner } from "src/app/shared/winner";
 import {
-  StartGameAction,
   GameActionTypes,
   UpdateGameBoardAction,
   SelectCellAction,
   UpdateLastPlayingPlayer,
-  UpdateWinnerIdAction,
-  StartNewGame
+  UpdateWinnerIdAction
 } from "./game.actions";
 import { generateMatrixModel, Matrix } from "src/app/lib/game-utilities/matrix";
 import { GameBoardToken, CurrentUserIdToken } from "./game.token";
 import { WebSocketService } from "../../web-socket.service";
 import { checkFour } from "src/app/lib/game-utilities/check-four";
 import { PlayersEnum } from "../players/players.enum";
+import { ShowNotificationAction } from "src/app/store/app.actions";
 
 const DEFAULT_MATRIX_ROW = 7;
 const DEFAULT_MATRIX_COL = 6;
@@ -71,6 +70,13 @@ export class GameEffect {
       this.webSockets.send(new UpdateLastPlayingPlayer(currentUserId));
 
       return actions;
+    }),
+    catchError(er => {
+      return of(
+        new ShowNotificationAction({
+          options: { title: "Something went wrong", showCancelButton: false }
+        })
+      );
     })
   );
 

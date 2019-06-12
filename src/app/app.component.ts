@@ -1,15 +1,9 @@
 import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { SweetAlertToken } from "./store/app.token";
 import { Observable } from "rxjs";
-import { Action } from "@ngrx/store";
-import { SweetAlertOptions } from "sweetalert2";
 import { SwalComponent } from "@sweetalert2/ngx-sweetalert2";
 import { tap } from "rxjs/operators";
 
-import { DispatcherToken } from "./app.tokens";
-import { Dispatcher } from "./shared/types";
-import { UpdateSweetAlertOptions } from "./store/app.actions";
-import { ResetGameStateAction } from "./home/game/store/game.actions";
 import { SweetAlertModel } from "./shared/sweet-allert.model";
 
 @Component({
@@ -18,16 +12,15 @@ import { SweetAlertModel } from "./shared/sweet-allert.model";
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-  private sweetAlertConfirmAction: Action;
-  private sweetAlertCancelAction: Action;
+  private sweetAlertConfirmCallback: () => void;
+  private cancelCallback: () => void;
 
   @ViewChild("sweetAlert", { static: true })
   sweetAlert: SwalComponent;
 
   constructor(
     @Inject(SweetAlertToken)
-    public sweetAlert$: Observable<SweetAlertModel>,
-    @Inject(DispatcherToken) private dispatcher: Dispatcher
+    public sweetAlert$: Observable<SweetAlertModel>
   ) {}
 
   ngOnInit(): void {
@@ -36,8 +29,8 @@ export class AppComponent implements OnInit {
         tap(value => {
           if (value) {
             this.sweetAlert.options = value.options;
-            this.sweetAlertConfirmAction = value.confirmAction;
-            this.sweetAlertCancelAction = value.cancelAction;
+            this.sweetAlertConfirmCallback = value.confirmCallback;
+            this.cancelCallback = value.cancelCallback;
             this.sweetAlert.show();
           }
         })
@@ -46,10 +39,10 @@ export class AppComponent implements OnInit {
   }
 
   onSweetAlertConfirm() {
-    this.dispatcher(this.sweetAlertConfirmAction);
+    this.sweetAlertConfirmCallback();
   }
 
   onSweetAlertCancel() {
-    this.dispatcher(this.sweetAlertCancelAction);
+    this.cancelCallback();
   }
 }

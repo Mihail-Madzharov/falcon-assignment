@@ -26,6 +26,7 @@ import {
 import { BoardCell } from "./game-board/board-cell";
 import { PlayersEnum } from "./players/players.enum";
 import { WebSocketService } from "../web-socket.service";
+import { ShowNotificationAction } from "src/app/store/app.actions";
 
 @Component({
   selector: "app-game",
@@ -110,7 +111,26 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   onLeaveGameClickHandler() {
-    this.dispatcher(new ResetGameStateAction());
-    this.webSockets.send(new ResetGameStateAction());
+    this.dispatcher(
+      new ShowNotificationAction({
+        options: {
+          showCancelButton: true,
+          showConfirmButton: true,
+          title: "Are you sure you want to leave the game."
+        },
+        confirmCallback: () => {
+          this.dispatcher(new ResetGameStateAction());
+          this.webSockets.send(new ResetGameStateAction());
+          this.webSockets.send(
+            new ShowNotificationAction({
+              options: {
+                title: "The other user left the game",
+                showCancelButton: false
+              }
+            })
+          );
+        }
+      })
+    );
   }
 }
