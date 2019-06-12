@@ -27,3 +27,8 @@ export const lastPlayingPlayerId = createSelector(
   featureSelector,
   state => state.lastPlayingPlayer
 );
+
+export const winnerId = createSelector(
+  featureSelector,
+  state => state.winnerId
+);

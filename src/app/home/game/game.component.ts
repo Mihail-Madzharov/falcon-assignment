@@ -10,7 +10,8 @@ import {
   CurrentUserIdToken,
   SecondUserIdToken,
   GameStartedToken,
-  LastPlayingPlayerId
+  LastPlayingPlayerId,
+  WinnerIdToken
 } from "./store/game.token";
 import {
   StartGameAction,
@@ -45,7 +46,9 @@ export class GameComponent implements OnInit, OnDestroy {
     @Inject(GameStartedToken)
     public gameStarted$: Observable<boolean>,
     @Inject(LastPlayingPlayerId)
-    public lastPlayingPlayerId$: Observable<number>
+    public lastPlayingPlayerId$: Observable<number>,
+    @Inject(WinnerIdToken)
+    public winnerId$: Observable<number>
   ) {}
 
   ngOnInit(): void {

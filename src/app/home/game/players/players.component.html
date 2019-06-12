@@ -1,12 +1,22 @@
 <app-avatar
   [isCurrentPlayer]="currentUserId !== lastPlayingPlayerId"
+  [theirTurn]="
+    PLAYER_TWO_ID === lastPlayingPlayerId &&
+    lastPlayingPlayerId == currentUserId
+  "
   [label]="'Player one'"
   [subtitle]="calculateCurrentUserSubLabel()"
   [gameStarted]="currentUserId === PLAYER_ONE_ID"
+  [winner]="winnerId === PLAYER_ONE_ID"
 ></app-avatar>
 
 <app-avatar
   [isCurrentPlayer]="currentUserId !== lastPlayingPlayerId"
+  [theirTurn]="
+    PLAYER_ONE_ID === lastPlayingPlayerId &&
+    lastPlayingPlayerId == currentUserId
+  "
+  [winner]="winnerId === PLAYER_TWO_ID"
   [label]="'Player two'"
   [subtitle]="calculateSecondUserSubLabel()"
   [gameStarted]="currentUserId === PLAYER_TWO_ID"

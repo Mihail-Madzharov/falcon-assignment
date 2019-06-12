@@ -1,18 +1,23 @@
 import { Injectable, Inject } from "@angular/core";
 import { Effect, Actions, ofType } from "@ngrx/effects";
-import { map, withLatestFrom, switchMap } from "rxjs/operators";
+import { withLatestFrom, switchMap } from "rxjs/operators";
+import { Action } from "@ngrx/store";
+import { Observable, from } from "rxjs";
 
+import { Winner } from "src/app/shared/winner";
 import {
   StartGameAction,
   GameActionTypes,
   UpdateGameBoardAction,
   SelectCellAction,
-  UpdateLastPlayingPlayer
+  UpdateLastPlayingPlayer,
+  UpdateWinnerIdAction
 } from "./game.actions";
 import { generateMatrixModel, Matrix } from "src/app/lib/game-utilities/matrix";
 import { GameBoardToken, CurrentUserIdToken } from "./game.token";
-import { Observable, from } from "rxjs";
 import { WebSocketService } from "../../web-socket.service";
+import { checkFour } from "src/app/lib/game-utilities/check-four";
+import { PlayersEnum } from "../players/players.enum";
 
 const DEFAULT_MATRIX_ROW = 7;
 const DEFAULT_MATRIX_COL = 6;
@@ -38,15 +43,32 @@ export class GameEffect {
     switchMap(([action, matrix, currentUserId]) => {
       const row = action.payload.row;
       const col = action.payload.col;
+      // first we select the cell
       matrix[row][col] = currentUserId;
+
+      // then we check if the game is over
+      const result: Winner = checkFour(currentUserId, matrix, [col, row]);
+
+      const actions: Action[] = [
+        new UpdateGameBoardAction(matrix),
+        new UpdateLastPlayingPlayer(currentUserId)
+      ];
+
+      // if the game is over we want to show it to the user
+      if (result && result.pieces) {
+        result.pieces.forEach(([winningRow, winningCol]) => {
+          matrix[winningCol][winningRow] = PlayersEnum.Winner;
+        });
+
+        actions.push(new UpdateWinnerIdAction(result.playerId));
+
+        this.webSockets.send(new UpdateWinnerIdAction(result.playerId));
+      }
 
       this.webSockets.send(new UpdateGameBoardAction(matrix));
       this.webSockets.send(new UpdateLastPlayingPlayer(currentUserId));
 
-      return [
-        new UpdateGameBoardAction(matrix),
-        new UpdateLastPlayingPlayer(currentUserId)
-      ];
+      return actions;
     })
   );
 

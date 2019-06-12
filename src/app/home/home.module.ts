@@ -14,14 +14,16 @@ import {
   currentUserIdSelector,
   secondUserId,
   gameStarted,
-  lastPlayingPlayerId
+  lastPlayingPlayerId,
+  winnerId
 } from "./game/store/game.selectors";
 import {
   GameBoardToken,
   CurrentUserIdToken,
   SecondUserIdToken,
   GameStartedToken,
-  LastPlayingPlayerId
+  LastPlayingPlayerId,
+  WinnerIdToken
 } from "./game/store/game.token";
 import { PlayersComponent } from "./game/players/players.component";
 import { AvatarComponent } from "./game/players/avatar/avatar.component";
@@ -58,6 +60,11 @@ import { AvatarComponent } from "./game/players/avatar/avatar.component";
     {
       provide: LastPlayingPlayerId,
       useFactory: store => store.select(lastPlayingPlayerId),
+      deps: [Store]
+    },
+    {
+      provide: WinnerIdToken,
+      useFactory: store => store.select(winnerId),
       deps: [Store]
     }
   ],

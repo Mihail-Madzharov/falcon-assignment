@@ -22,3 +22,7 @@ export const GameStartedToken = new InjectionToken<Observable<boolean>>(
 export const LastPlayingPlayerId = new InjectionToken<Observable<number>>(
   "This will provide the last playing player id"
 );
+
+export const WinnerIdToken = new InjectionToken<Observable<number>>(
+  "This will provide the winner id "
+);

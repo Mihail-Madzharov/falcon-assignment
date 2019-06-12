@@ -26,10 +26,6 @@
   padding: 50px 0;
 }
 
-.winning-pieces {
-  background-color: yellow;
-}
-
 .flc-game-board {
   box-sizing: border-box;
   border: 1px solid #ccc;
@@ -142,23 +138,16 @@
   }
 }
 
-.flc-card {
-  &-main {
-    margin: 10px;
-    width: 100%;
-  }
-  &-aside {
-    margin: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    width: 390px;
-  }
-}
-
 .player-one-background {
   background-color: $player-one-color;
 }
 
 .player-two-background {
   background-color: $player-two-color;
+}
+
+.winning-pieces {
+  animation: winner-jump 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67) infinite
+    alternate-reverse !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }

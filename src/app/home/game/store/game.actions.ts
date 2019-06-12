@@ -2,6 +2,7 @@ import { Action } from "@ngrx/store";
 import { Matrix } from "src/app/lib/game-utilities/matrix";
 import { BoardCell } from "../game-board/board-cell";
 import { GlobalAction } from "src/app/shared/global-action";
+import { Winner } from "src/app/shared/winner";
 
 export const GameActionTypes = {
   StartGame: "[GAME] This will start the game",
@@ -10,7 +11,8 @@ export const GameActionTypes = {
   UpdateCurrentUserId: "[GAME] This will update current user Id",
   UpdateSecondUserId: "[GAME] This will update the second user Id",
   ToggleStartGame: "[Game] This will toggle the start game state",
-  UpdateLastPlayingPlayer: "[Game] This will update the next player id"
+  UpdateLastPlayingPlayer: "[Game] This will update the next player id",
+  UpdateWinnerId: "[Game] Update game winner"
 };
 
 export class StartGameAction extends GlobalAction implements Action {
@@ -54,6 +56,13 @@ export class UpdateSecondUserId extends GlobalAction implements Action {
 
 export class UpdateLastPlayingPlayer extends GlobalAction implements Action {
   readonly type: string = GameActionTypes.UpdateLastPlayingPlayer;
+  constructor(public payload: number) {
+    super();
+  }
+}
+
+export class UpdateWinnerIdAction extends GlobalAction implements Action {
+  readonly type: string = GameActionTypes.UpdateWinnerId;
   constructor(public payload: number) {
     super();
   }
