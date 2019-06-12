@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlayersComponent should match snapshot 1`] = `
+<app-players
+  NO_PLAYER_SELECTED_ID={[Function Number]}
+  PLAYER_ONE_ID={[Function Number]}
+  PLAYER_TWO_ID={[Function Number]}
+  joinGame={[Function EventEmitter]}
+  startGame={[Function EventEmitter]}
+>
+  <app-avatar /><app-avatar /><div
+    class="mdl-card__actions mdl-card--border"
+  >
+    <button
+      class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
+      disabled=""
+    >
+       Start game 
+    </button>
+    
+    <button
+      class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect"
+    >
+       Join game 
+    </button>
+  </div>
+</app-players>
+`;
