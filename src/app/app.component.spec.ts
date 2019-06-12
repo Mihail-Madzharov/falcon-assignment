@@ -3,16 +3,22 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { AppComponent } from "./app.component";
 
 describe("AppComponent", () => {
+  let fixture;
+  let app;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [AppComponent]
     }).compileComponents();
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.debugElement.componentInstance;
   }));
 
   it("should create the app", () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
+  });
+
+  it("should match snapshot", () => {
+    expect(fixture).toMatchSnapshot();
   });
 });

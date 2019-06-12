@@ -8,6 +8,10 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeModule } from "./home/home.module";
 import { DispatcherToken } from "./app.tokens";
+import { appReducers } from "./store/app.reducers";
+import { SweetAlertToken } from "./store/app.token";
+import { sweetAlertOptions } from "./store/app.selectors";
+import { AppState } from "./store/app.state";
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +20,7 @@ import { DispatcherToken } from "./app.tokens";
     AppRoutingModule,
     HomeModule,
     StoreModule.forRoot({}),
+    StoreModule.forFeature(AppState.stateName, appReducers),
     EffectsModule.forRoot([]),
     SweetAlert2Module.forRoot()
   ],
@@ -23,6 +28,11 @@ import { DispatcherToken } from "./app.tokens";
     {
       provide: DispatcherToken,
       useFactory: store => action => store.dispatch(action),
+      deps: [Store]
+    },
+    {
+      provide: SweetAlertToken,
+      useFactory: store => store.select(sweetAlertOptions),
       deps: [Store]
     }
   ],
