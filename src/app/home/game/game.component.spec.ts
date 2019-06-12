@@ -16,6 +16,7 @@ import { DispatcherToken } from "src/app/app.tokens";
 import { WebSocketService } from "../web-socket.service";
 import { GameActionTypes } from "./store/game.actions";
 import { PlayersEnum } from "./players/players.enum";
+import { AppStateActions } from "src/app/store/app.actions";
 @Pipe({
   name: "async"
 })
@@ -340,11 +341,14 @@ describe("GameComponent", () => {
 
       // Dispatcher Assert
       expect(dispatcherActionContainers[0].type).toBe(
-        GameActionTypes.ResetGameState
+        AppStateActions.ShowNotificationAction
       );
-      expect(webSocketsActionContainers[0].type).toBe(
-        GameActionTypes.ResetGameState
-      );
+
+      expect(dispatcherActionContainers[0].payload.options).toEqual({
+        showCancelButton: true,
+        showConfirmButton: true,
+        title: "Are you sure you want to leave the game."
+      });
     });
   });
   function setup() {

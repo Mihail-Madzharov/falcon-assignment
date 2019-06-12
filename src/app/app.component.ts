@@ -13,7 +13,7 @@ import { SweetAlertModel } from "./shared/sweet-allert.model";
 })
 export class AppComponent implements OnInit {
   private sweetAlertConfirmCallback: () => void;
-  private cancelCallback: () => void;
+  private sweetAlertCancelCallback: () => void;
 
   @ViewChild("sweetAlert", { static: true })
   sweetAlert: SwalComponent;
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
           if (value) {
             this.sweetAlert.options = value.options;
             this.sweetAlertConfirmCallback = value.confirmCallback;
-            this.cancelCallback = value.cancelCallback;
+            this.sweetAlertCancelCallback = value.cancelCallback;
             this.sweetAlert.show();
           }
         })
@@ -43,6 +43,6 @@ export class AppComponent implements OnInit {
   }
 
   onSweetAlertCancel() {
-    this.cancelCallback();
+    this.sweetAlertCancelCallback();
   }
 }

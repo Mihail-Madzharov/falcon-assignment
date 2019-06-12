@@ -1,3 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AppComponent should match snapshot 1`] = `undefined`;
+exports[`AppComponent should match snapshot 1`] = `
+<app-root
+  sweetAlert={[Function SweetAlertMockComponent]}
+  sweetAlert$={[Function Subject]}
+>
+  <swal /><router-outlet />
+</app-root>
+`;

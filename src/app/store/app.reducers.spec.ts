@@ -1,20 +1,22 @@
-import { Matrix } from "src/app/lib/game-utilities/matrix";
 import { AppState } from "./app.state";
-import { UpdateSweetAlertOptions } from "./app.actions";
+import { ShowNotificationAction } from "./app.actions";
+import { appReducers } from "./app.reducers";
 
 describe("Gamer reducer", () => {
   let gameState: AppState;
   beforeEach(() => {
     gameState = {
-      sweetAlertOptions: {}
+      sweetAlertModel: undefined
     };
   });
 
-  it("should updateGameBoard on UpdateGameBoardAction", () => {
-    const updateGameBoardAction = new UpdateSweetAlertOptions({});
+  it("should updateGameBoard on update sweet alert options on ShowNotificationAction", () => {
+    const updateGameBoardAction = new ShowNotificationAction({
+      options: { title: "Mock title" }
+    });
     // Act
-    const result = gameReducer(gameState, updateGameBoardAction);
+    const result = appReducers(gameState, updateGameBoardAction);
     // Assert
-    expect(result).toStrictEqual([[1, 2, 3]]);
+    expect(result.sweetAlertModel.options).toEqual({ title: "Mock title" });
   });
 });
