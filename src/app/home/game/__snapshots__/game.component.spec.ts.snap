@@ -10,6 +10,7 @@ exports[`GameComponent should match snapshot 1`] = `
   lastPlayingPlayerId$={[Function Function]}
   secondUserId$={[Function Function]}
   webSockets={[Function WebSocketService]}
+  winnerId$={[Function Function]}
 >
   <main
     class="mdl-layout__content flc-layout--center-middle"
