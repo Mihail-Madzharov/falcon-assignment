@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, OnDestroy } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { Dispatcher } from "src/app/shared/types";
-import { tap, takeUntil } from "rxjs/operators";
+import { tap, takeUntil, withLatestFrom } from "rxjs/operators";
 
 import { Matrix } from "src/app/lib/game-utilities/matrix";
 import { DispatcherToken } from "src/app/app.tokens";
@@ -21,12 +21,14 @@ import {
   ToggleGameStartAction,
   UpdateLastPlayingPlayer,
   ResetGameStateAction,
-  StartNewGame
+  StartNewGame,
+  UpdateState
 } from "./store/game.actions";
 import { BoardCell } from "./game-board/board-cell";
 import { PlayersEnum } from "./players/players.enum";
 import { WebSocketService } from "../web-socket.service";
 import { ShowNotificationAction } from "src/app/store/app.actions";
+import { ConnectionEvents } from "src/app/shared/connection-events";
 
 @Component({
   selector: "app-game",
@@ -61,11 +63,47 @@ export class GameComponent implements OnInit, OnDestroy {
       .getDownstream()
       .pipe(
         takeUntil(this.destroy$),
-        tap(event => {
-          if (event.data.message.globalType != null) {
-            this.dispatcher(event.data.message);
+        withLatestFrom(
+          this.gameStarted$,
+          this.currentUserId$,
+          this.secondUserId$,
+          this.lastPlayingPlayerId$,
+          this.winnerId$,
+          this.gameBoard$
+        ),
+        tap(
+          ([
+            event,
+            gameStarted,
+            currentUserId,
+            secondUserId,
+            lastPlayingPlayer,
+            winnerId,
+            gameBoard
+          ]) => {
+            // if the user got disconnected we check if the game is in progress
+            // if it is we update the other user state
+            if (
+              gameStarted &&
+              event.data.message.type === ConnectionEvents.join
+            ) {
+              this.webSockets.send(
+                new UpdateState({
+                  currentUserId: secondUserId,
+                  secondUserId: currentUserId,
+                  lastPlayingPlayer,
+                  winnerId,
+                  gameStarted,
+                  gameBoard
+                })
+              );
+            }
+
+            if (event.data.message.globalType != null) {
+              this.dispatcher(event.data.message);
+            }
           }
-        })
+        )
       )
       .subscribe();
   }

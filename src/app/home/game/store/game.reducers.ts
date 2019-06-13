@@ -10,7 +10,8 @@ import {
   UpdateLastPlayingPlayer,
   UpdateWinnerIdAction,
   ResetGameStateAction,
-  StartNewGame
+  StartNewGame,
+  UpdateState
 } from "./game.actions";
 import { GameState } from "./game.state";
 import { PlayersEnum } from "../players/players.enum";
@@ -23,6 +24,10 @@ const initialState: GameState = {
   lastPlayingPlayer: PlayersEnum.NoPlayerSelectedId,
   winnerId: null
 };
+
+function updateState(state: GameState, action: UpdateState) {
+  return action.payload;
+}
 
 function updateGameBoard(state: GameState, action: UpdateGameBoardAction) {
   const newState = Object.assign({}, state);
@@ -86,7 +91,8 @@ const mapGameReducers: ActionsMap<GameState> = {
   [GameActionTypes.UpdateLastPlayingPlayer]: updateNextPlayerIdTurn,
   [GameActionTypes.UpdateWinnerId]: updateWinner,
   [GameActionTypes.StartNewGame]: startNewGame,
-  [GameActionTypes.ResetGameState]: resetGameState
+  [GameActionTypes.ResetGameState]: resetGameState,
+  [GameActionTypes.UpdateHoleState]: updateState,
 };
 
 export function gameReducer(state: GameState = initialState, action: Action) {

@@ -2,7 +2,7 @@ import { Action } from "@ngrx/store";
 import { Matrix } from "src/app/lib/game-utilities/matrix";
 import { BoardCell } from "../game-board/board-cell";
 import { GlobalAction } from "src/app/shared/global-action";
-import { Winner } from "src/app/shared/winner";
+import { GameState } from "./game.state";
 
 export const GameActionTypes = {
   StartGame: "[GAME] This will start the game",
@@ -14,7 +14,8 @@ export const GameActionTypes = {
   UpdateLastPlayingPlayer: "[Game] This will update the next player id",
   UpdateWinnerId: "[Game] Update game winner",
   ResetGameState: "[Game] Reset game state",
-  StartNewGame: "[Game] This will start a new game"
+  StartNewGame: "[Game] This will start a new game",
+  UpdateHoleState: "[Game] This will update the hole state of the game"
 };
 
 export class StartGameAction extends GlobalAction implements Action {
@@ -75,4 +76,11 @@ export class ResetGameStateAction extends GlobalAction implements Action {
 }
 export class StartNewGame extends GlobalAction implements Action {
   readonly type: string = GameActionTypes.StartNewGame;
+}
+
+export class UpdateState extends GlobalAction implements Action {
+  readonly type: string = GameActionTypes.UpdateHoleState;
+  constructor(public payload: GameState) {
+    super();
+  }
 }
