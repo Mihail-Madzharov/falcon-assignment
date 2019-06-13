@@ -81,12 +81,9 @@ export class GameComponent implements OnInit, OnDestroy {
             winnerId,
             gameBoard
           ]) => {
-            // if the user got disconnected we check if the game is in progress
-            // if it is we update the other user state
-            if (
-              gameStarted &&
-              event.data.message.type === ConnectionEvents.join
-            ) {
+            // if the user got disconnected and re connect
+            // we want to update him to the last game state
+            if (event.data.message.type === ConnectionEvents.join) {
               this.webSockets.send(
                 new UpdateState({
                   currentUserId: secondUserId,
