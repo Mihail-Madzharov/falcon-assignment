@@ -48,8 +48,6 @@
     "style-loader": "0.20.3",
     "svg-url-loader": "2.3.2",
     "codelyzer": "^5.0.0",
-    "jasmine-core": "~3.4.0",
-    "jasmine-spec-reporter": "~4.2.1",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",

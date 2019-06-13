@@ -21,35 +21,35 @@ exports[`FooterComponent should match snapshot 1`] = `
         >
           <li>
             <a
-              href="/doc.html#"
+              href="/assets/documentation/doc.html#"
             >
               Documentation
             </a>
           </li>
           <li>
             <a
-              href="/doc.html#requirements#"
+              href="/assets/documentation/doc.html#requirements#"
             >
               Requirements
             </a>
           </li>
           <li>
             <a
-              href="/doc.html#boilerplate"
+              href="/assets/documentation/doc.html#boilerplate"
             >
               Boilerplate
             </a>
           </li>
           <li>
             <a
-              href="/doc.html#how-to-submit"
+              href="/assets/documentation/doc.html#how-to-submit"
             >
               How to submit?
             </a>
           </li>
           <li>
             <a
-              href="/doc.html#how-do-we-evaluate"
+              href="/assets/documentation/doc.html#how-do-we-evaluate"
             >
               How do we evaluate?
             </a>

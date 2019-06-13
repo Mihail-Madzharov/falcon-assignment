@@ -6,6 +6,6 @@ exports[`HomeComponent should match snapshot 1`] = `
     class="flc-layout-bg mdl-layout mdl-js-layout"
   >
     <app-game />
-  </div>
+  </div><app-footer />
 </app-home>
 `;

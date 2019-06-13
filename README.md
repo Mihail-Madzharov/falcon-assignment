@@ -1,27 +1,63 @@
-# FalconAssignment
+# Frontend assignment
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.2.
+Welcome to the assignment for candidates applying for a frontend position at Falcon.io.
 
-## Development server
+To get started run the following commands.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```
+npm install
+npm start
+```
 
-## Code scaffolding
+Once everything is bootstraped navigate to `http://localhost:4200` in your browser.<br/>
+Here you should be met with a documentation page explaining the assignment in details and how to get started.<br/>
+All information needed to get started is highlighted in the documentation. Please read it thoroughly.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+If you face issues with the installation, booting up the development server or API, make sure that you're running the LTS version of NodeJS, like <code>v8.10.0</code> <br>
+Should you still have questions you're of course welcome to contact us.
 
-## Build
+**IMPORTANT**: <br/>
+To submit your test you must create a repo on GitHub with your solution and provide us access.
+Read more about how to submit in the documentation.<br/><br/>
+**FRAMEWORK**:
+<h1><a href="https://angular.io/">Angular</a></h1>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+**TESTING**: <br/>
+For unit testing we are using Jest <br/>
+For testing the Effects we are using <a href="https://github.com/ReactiveX/rxjs/blob/master/docs_app/content/guide/testing/marble-testing.md">jasmine-marbles</a><br/>
+To run the tests run the following command:
 
-## Running unit tests
+```
+npm test
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+To run tests in watch mode run:
 
-## Running end-to-end tests
+```
+npm run test:watch
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+**STATE MANAGEMENT**<br/>
+For state management we are using <a href="https://ngrx.io/docs">NgRx</a><br/>
 
-## Further help
+**ARCHITECTURE**
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- [app]()
+  - [home]()
+    - [game]()
+      - [game-board]()
+      - [players]()
+      - [store]()
+    - [footer]()
+  - [store]()
+  - [shared]()<br/><br/>
+
+We have two states, one is the app state that holds the global
+app state. And the other one is the one that holds the game state.<br/>
+
+**NOTIFICATIONS**
+<br/>
+For notifications we are using <a href="https://github.com/sweetalert2/ngx-sweetalert2">Sweet alert</a> <br/><br/>
+Enjoy!<br/>
+Kind regards,<br/>
+The frontend team @ Falcon.io
