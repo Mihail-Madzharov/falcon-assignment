@@ -100,9 +100,10 @@ export class GameComponent implements OnInit, OnDestroy {
   checkIfPlayerCanPlay(
     gameStarted: boolean,
     currentUserId: number,
-    lastPlayingPlayerId: number
+    lastPlayingPlayerId: number,
+    winnerId: number
   ) {
-    return gameStarted && currentUserId !== lastPlayingPlayerId;
+    return gameStarted && currentUserId !== lastPlayingPlayerId && !winnerId;
   }
 
   onNewGameClickHandler() {
@@ -124,7 +125,7 @@ export class GameComponent implements OnInit, OnDestroy {
           this.webSockets.send(
             new ShowNotificationAction({
               options: {
-                title: "The other user left the game",
+                title: "The other user left the game!",
                 showCancelButton: false
               }
             })
