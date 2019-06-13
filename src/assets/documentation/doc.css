@@ -1,0 +1,227 @@
+
+.flc-navigation__group-header {
+  font-weight: bold;
+  margin-top: 20px !important;
+}
+.flc-navigation__group-header:first-child {
+  margin-top: 0 !important;
+}
+.flc-navigation__group-item {
+  padding: 5px 40px !important;
+}
+code {
+  background: #eee;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+.flc-code-block {
+  display: block;
+  padding: 20px;
+  margin: 20px 0;
+}
+.flc-demo-block {
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 20px;
+  margin: 20px 0;
+  background: #f9f9f9;
+}
+
+body {
+  display: block;
+}
+.flc-layout-bg {
+  background-color: #333;
+  background-image: repeating-linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    repeating-linear-gradient(
+      60deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    linear-gradient(
+      60deg,
+      rgba(0, 0, 0, 0.1) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(0, 0, 0, 0.1) 75%,
+      rgba(0, 0, 0, 0.1)
+    ),
+    linear-gradient(
+      120deg,
+      rgba(0, 0, 0, 0.1) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(0, 0, 0, 0.1) 75%,
+      rgba(0, 0, 0, 0.1)
+    );
+  background-size: 70px 120px;
+}
+.flc-layout--center {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+.flc-layout--center-middle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flc-card-main {
+  margin: 10px;
+  width: 100%;
+}
+.flc-card-aside {
+  margin: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 390px;
+}
+
+@keyframes winner-jump {
+  from {
+    transform: translateY(0) rotateY(0);
+  }
+  to {
+    transform: translateY(-7px) rotateY(20deg);
+  }
+}
+@keyframes drop-in {
+  from {
+    transform: translateY(-512px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes thinking {
+  from {
+    transform: rotateZ(-45deg) translate(-12px, 45px);
+  }
+  to {
+    transform: rotateZ(-50deg) translate(-12px, 45px);
+  }
+}
+.flc-game-piece {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 75px;
+  height: 75px;
+  border-radius: 100%;
+  box-shadow: inset 0px -2px 2px rgba(0, 0, 0, 0.2),
+    inset 0px 2px 2px rgba(255, 255, 255, 0.5);
+  margin: 5px;
+  pointer-events: none;
+}
+.flc-game-avatar-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.flc-game-avatar {
+  display: inline-block;
+  height: 75px;
+  width: 75px;
+  border: 1px solid #eee;
+  border-radius: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  margin: 5px;
+  background-position-y: 2px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.flc-game-avatar:after {
+  content: "";
+  background-image: url("../lib/styles/assets/hand.svg");
+  background-repeat: none;
+  height: 30px;
+  width: 30px;
+  background-size: contain;
+  display: none;
+}
+.flc-game-avatar.man {
+  background-image: url("../lib/styles/assets/man.svg");
+}
+.flc-game-avatar.woman {
+  background-image: url("../lib/styles/assets/woman.svg");
+}
+.flc-game-board {
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 512px;
+  display: flex;
+  align-items: flex-end;
+  width: 595px;
+  background: #fff;
+  box-shadow: inset 0 0px 10px rgba(0, 0, 0, 0.1);
+}
+.flc-game-board > .board-col {
+  box-sizing: border-box;
+  height: 100%;
+  width: 85px;
+  border-right: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+.flc-game-board > .board-col:last-child {
+  border: 0;
+  width: 85px;
+}
+.flc-game-board > .board-col:before {
+  content: "";
+  box-sizing: border-box;
+  width: 75px;
+  height: 75px;
+  display: inline-block;
+  border-radius: 100%;
+  margin: 5px;
+  border: 2px dashed #ccc;
+  transition: all 0.3s;
+  opacity: 0;
+  transform: translateY(-40px);
+}
+.flc-game-board > .board-col:hover {
+  background: #f9f9f9;
+  box-shadow: inset 0px -3px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.flc-game-board > .board-col:hover:before {
+  opacity: 1;
+  transform: translateY(0);
+}
+.flc-game-board > .board-col > .flc-game-piece {
+  animation: drop-in 0.5s linear;
+  flex-shrink: 0;
+}
+.player-one {
+  background-color: #faebd7;
+  border: 1px solid green;
+}
+.player-two {
+  background-color: #8fbc8f;
+  border: 1px solid green;
+}
+.winner {
+  animation: winner-jump 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67) infinite
+    alternate-reverse !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.their-turn {
+  border-width: 2px;
+}
+.their-turn:after {
+  display: inline-block;
+  animation: thinking 2s linear infinite alternate-reverse !important;
+}
