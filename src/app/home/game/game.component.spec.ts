@@ -17,6 +17,7 @@ import { WebSocketService } from "../web-socket.service";
 import { GameActionTypes } from "./store/game.actions";
 import { PlayersEnum } from "./players/players.enum";
 import { AppStateActions } from "src/app/store/app.actions";
+import { ConnectionEvents } from "src/app/shared/connection-events";
 @Pipe({
   name: "async"
 })
@@ -81,7 +82,7 @@ describe("GameComponent", () => {
 
   describe("", () => {
     it(`should dispatch action to start the game and
-  send actions through the websocket to update the other user state`, () => {
+        send actions through the websocket to update the other user state`, () => {
       // Arrange
       const dispatcherActionContainers = [];
       const mockDispatcher = action => {
@@ -264,12 +265,43 @@ describe("GameComponent", () => {
         GameActionTypes.StartGame
       );
     });
+
+    it("should send action to update the second user state in case he disconnected unexpectedly", () => {
+      // Arrange
+      const webSocketContainer = [];
+      const mockDownStreamData = new Subject();
+      const gameStarted$ = new Subject();
+      const mockWebSocketService = {
+        createWebSocketConnection: () => {},
+        getDownstream: action => mockDownStreamData,
+        send: action => webSocketContainer.push(action)
+      };
+
+      const comp = setup()
+        .default()
+        .mockWebSocketService(mockWebSocketService)
+        .mockGameStarted(gameStarted$)
+        .build();
+      comp.ngOnInit();
+      // Act
+      gameStarted$.next(true);
+      mockDownStreamData.next({
+        data: {
+          message: {
+            type: ConnectionEvents.join
+          }
+        }
+      });
+
+      // Assert
+      expect(webSocketContainer[0].type).toBe(GameActionTypes.UpdateHoleState);
+    });
   });
 
   describe("checkIfPlayerCanPlay", () => {
     it("should return false if game started is false and the currentUserId is different than the lastPlayingPlayerId", () => {
       // Act
-      const result = component.checkIfPlayerCanPlay(false, 1, 2);
+      const result = component.checkIfPlayerCanPlay(false, 1, 2, 1);
       // Assert
       expect(result).toBeFalsy();
     });
@@ -277,7 +309,7 @@ describe("GameComponent", () => {
     it("should return true if game started is true and the currentUserId is different than the lastPlayingPlayerId", () => {
       // Arrange
       // Act
-      const result = component.checkIfPlayerCanPlay(true, 1, 1);
+      const result = component.checkIfPlayerCanPlay(true, 1, 1, 0);
       // Assert
       expect(result).toBeFalsy();
     });
@@ -394,6 +426,11 @@ describe("GameComponent", () => {
       },
       mockWebSocketService: (mockWebSocket: any) => {
         webSockets = mockWebSocket;
+        return builder;
+      },
+      mockGameStarted: (gameStartedMock$: Subject<any>) => {
+        gameStarted$ = gameStartedMock$;
+
         return builder;
       }
     };
