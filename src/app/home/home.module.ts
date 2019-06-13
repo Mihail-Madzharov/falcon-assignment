@@ -27,6 +27,7 @@ import {
 } from "./game/store/game.token";
 import { PlayersComponent } from "./game/players/players.component";
 import { AvatarComponent } from "./game/players/avatar/avatar.component";
+import { FooterComponent } from "./footer/footer.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AvatarComponent } from "./game/players/avatar/avatar.component";
     HomeComponent,
     GameBoardComponent,
     PlayersComponent,
-    AvatarComponent
+    AvatarComponent,
+    FooterComponent
   ],
   providers: [
     {
